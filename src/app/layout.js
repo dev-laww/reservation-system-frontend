@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import React from "react";
 import { ColorSchemeScript } from "@mantine/core";
-import { Provider, Navigation } from "@components/common";
+import { Provider, Navigation, ColorSchemeToggle } from "@components/common";
 
 export const metadata = {
     title: "Mantine Next.js template",
@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
             <body>
                 <Provider>
                     <Navigation />
+                    <ColorSchemeToggle />
                     {children}
                 </Provider>
             </body>
