@@ -1,11 +1,29 @@
-import { Welcome } from "@components/Welcome/Welcome";
-import { ColorSchemeToggle } from "@components/common/ColorSchemeToggle";
+"use client"
 
-export default async function HomePage() {
+import {
+    LoginButton,
+    LogoutButton,
+    ProfileButton,
+    RegisterButton,
+} from "@components/Buttons";
+
+export default function Home() {
+
     return (
-        <>
-            <Welcome />
-            <ColorSchemeToggle />
-        </>
+        <main
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "70vh",
+            }}
+        >
+            <div>
+                <LoginButton />
+                <RegisterButton />
+                <LogoutButton />
+                <ProfileButton />
+            </div>
+        </main>
     );
 }
