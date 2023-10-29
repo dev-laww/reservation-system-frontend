@@ -1,5 +1,5 @@
 import { Center, Flex } from "@mantine/core";
-import { Auth as AuthForm } from "@src/components/forms";
+import { Auth as AuthForm } from "../../components/forms";
 
 export default function Auth() {
     return (

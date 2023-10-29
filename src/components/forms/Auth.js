@@ -139,7 +139,10 @@ export default function Login(props) {
                     )}
                 </Stack>
 
-                <Group justify="space-between" mt="xl">
+                <Group mt="xl" display="flex" style={{ flexDirection: "column", minWidth: "300px" }}>
+                    <Button type="submit " radius="md" fullWidth>
+                        {upperFirst(type)}
+                    </Button>
                     <Anchor
                         component="button"
                         type="button"
@@ -151,9 +154,15 @@ export default function Login(props) {
                             ? "Already have an account? Login"
                             : "Don't have an account? Register"}
                     </Anchor>
-                    <Button type="submit " radius="md">
-                        {upperFirst(type)}
-                    </Button>
+                    {type === "login" && (
+                        <Anchor
+                            c="dimmed"
+                            href="/auth/forgot-password"
+                            size="xs"
+                        >
+                            Forgot password?
+                        </Anchor>
+                    )}
                 </Group>
             </form>
         </Paper>
