@@ -4,8 +4,8 @@ import { ColorSchemeScript } from "@mantine/core";
 import { Provider, Navigation, ColorSchemeToggle } from "@components/common";
 
 export const metadata = {
-    title: "Mantine Next.js template",
-    description: "I am using Mantine with Next.js!",
+    title: "Reservation System",
+    description: "Reservation System",
 };
 
 export default function RootLayout({ children }) {
@@ -21,8 +21,6 @@ export default function RootLayout({ children }) {
             </head>
             <body>
                 <Provider>
-                    <Navigation />
-                    <ColorSchemeToggle />
                     {children}
                 </Provider>
             </body>
