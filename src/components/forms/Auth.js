@@ -140,7 +140,7 @@ export default function Login(props) {
                 </Stack>
 
                 <Group mt="xl" display="flex" style={{ flexDirection: "column", minWidth: "300px" }}>
-                    <Button type="submit " radius="md" fullWidth>
+                    <Button type="submit " radius="md" fullWidth color="secondary">
                         {upperFirst(type)}
                     </Button>
                     <Anchor
