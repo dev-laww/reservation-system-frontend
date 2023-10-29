@@ -12,42 +12,21 @@ import {
     Tabs,
     Burger,
     rem,
-    useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
     IconUser,
     IconLogout,
-    IconHeart,
-    IconStar,
-    IconMessage,
     IconSettings,
-    IconPlayerPause,
-    IconTrash,
-    IconSwitchHorizontal,
     IconChevronDown,
 } from "@tabler/icons-react";
+import { useSession, signOut } from "next-auth/react";
 import classes from "./Navigation.module.css";
 
-const user = {
-    name: "Jane Spoonfighter",
-    email: "janspoon@fighter.dev",
-    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80",
-};
-
-const tabs = [
-    "Home",
-    "Orders",
-    "Education",
-    "Community",
-    "Forums",
-    "Support",
-    "Account",
-    "Helpdesk",
-];
+const tabs = ["Home", "Properties", "Tenants", "Bookings", "Payments"];
 
 export default function Navigation() {
-    const theme = useMantineTheme();
+    const { data: session, status } = useSession();
     const [opened, { toggle }] = useDisclosure(false);
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -85,14 +64,17 @@ export default function Navigation() {
                                 })}
                             >
                                 <Group gap={7}>
-                                    <Avatar
-                                        src={user.image}
-                                        alt={user.name}
-                                        radius="xl"
-                                        size={20}
-                                    />
+                                    <Avatar radius="xl" size={20} />
                                     <Text fw={500} size="sm" lh={1} mr={3}>
-                                        {user.name}
+                                        {`${
+                                            session
+                                                ? session?.user.firstName
+                                                : ""
+                                        } ${
+                                            session
+                                                ? session?.user.lastName
+                                                : ""
+                                        }`}
                                     </Text>
                                     <IconChevronDown
                                         style={{
@@ -105,49 +87,6 @@ export default function Navigation() {
                             </UnstyledButton>
                         </Menu.Target>
                         <Menu.Dropdown>
-                            <Menu.Item
-                                leftSection={
-                                    <IconHeart
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        color={theme.colors.red[6]}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Liked posts
-                            </Menu.Item>
-                            <Menu.Item
-                                leftSection={
-                                    <IconStar
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        color={theme.colors.yellow[6]}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Saved posts
-                            </Menu.Item>
-                            <Menu.Item
-                                leftSection={
-                                    <IconMessage
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        color={theme.colors.blue[6]}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Your comments
-                            </Menu.Item>
-
                             <Menu.Label>Settings</Menu.Label>
                             <Menu.Item
                                 leftSection={
@@ -160,20 +99,7 @@ export default function Navigation() {
                                     />
                                 }
                             >
-                                Account settings
-                            </Menu.Item>
-                            <Menu.Item
-                                leftSection={
-                                    <IconSwitchHorizontal
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Change account
+                                Profile
                             </Menu.Item>
                             <Menu.Item
                                 leftSection={
@@ -185,39 +111,11 @@ export default function Navigation() {
                                         stroke={1.5}
                                     />
                                 }
+                                onClick={() =>
+                                    signOut({ callbackUrl: "/auth" })
+                                }
                             >
                                 Logout
-                            </Menu.Item>
-
-                            <Menu.Divider />
-
-                            <Menu.Label>Danger zone</Menu.Label>
-                            <Menu.Item
-                                leftSection={
-                                    <IconPlayerPause
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Pause subscription
-                            </Menu.Item>
-                            <Menu.Item
-                                color="red"
-                                leftSection={
-                                    <IconTrash
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Delete account
                             </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
