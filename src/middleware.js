@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt";
 
 const adminPaths = [
+    "/properties",
     "/tenants",
     "/booking",
     "/payments",
@@ -20,5 +21,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: "/((?!_next/static|_next/image|favicon.ico|auth/*).*)",
+    matcher: "/((?!_next/static|_next/image|favicon.ico|api/*|auth/*).*)",
 }
