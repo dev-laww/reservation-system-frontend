@@ -4,6 +4,9 @@ import cx from "clsx";
 import { useState } from "react";
 import {
     Container,
+    Drawer,
+    Center,
+    Box,
     Avatar,
     UnstyledButton,
     Group,
@@ -11,9 +14,12 @@ import {
     Menu,
     Tabs,
     Burger,
+    ScrollArea,
+    Divider,
+    Button,
     rem,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, upperFirst } from "@mantine/hooks";
 import {
     IconUser,
     IconLogout,
@@ -21,18 +27,136 @@ import {
     IconChevronDown,
 } from "@tabler/icons-react";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
 
-const tabs = ["Home", "Properties", "Tenants", "Bookings", "Payments"];
+const tabs = ["home", "properties", "tenants", "bookings", "payments"];
 
-export default function Navigation() {
-    const { data: session, status } = useSession();
-    const [opened, { toggle }] = useDisclosure(false);
+const UserMenu = () => {
+    const { data: session } = useSession();
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
+    return (
+        <Menu
+            width={260}
+            position="bottom-end"
+            transitionProps={{ transition: "pop-top-right" }}
+            onClose={() => setUserMenuOpened(false)}
+            onOpen={() => setUserMenuOpened(true)}
+            withinPortal
+            zIndex={1000000}
+        >
+            <Menu.Target>
+                <UnstyledButton
+                    className={cx(classes.user, {
+                        [classes.userActive]: userMenuOpened,
+                    })}
+                >
+                    <Group gap={7}>
+                        <Avatar radius="xl" size={20} />
+                        <Text fw={500} size="sm" lh={1} mr={3}>
+                            {`${session ? session?.user.firstName : ""} ${
+                                session ? session?.user.lastName : ""
+                            }`}
+                        </Text>
+                        <IconChevronDown
+                            style={{
+                                width: rem(12),
+                                height: rem(12),
+                            }}
+                            stroke={1.5}
+                        />
+                    </Group>
+                </UnstyledButton>
+            </Menu.Target>
+            <Menu.Dropdown>
+                <Menu.Label>Settings</Menu.Label>
+                <Menu.Item
+                    component="a"
+                    href="/profile"
+                    leftSection={
+                        <IconSettings
+                            style={{
+                                width: rem(16),
+                                height: rem(16),
+                            }}
+                            stroke={1.5}
+                        />
+                    }
+                >
+                    Profile
+                </Menu.Item>
+                <Menu.Item
+                    leftSection={
+                        <IconLogout
+                            style={{
+                                width: rem(16),
+                                height: rem(16),
+                            }}
+                            stroke={1.5}
+                        />
+                    }
+                    onClick={() => signOut({ callbackUrl: "/auth" })}
+                >
+                    Logout
+                </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
+    );
+};
+
+const MobileMenu = ({ opened, onClose }) => {
     const items = tabs.map((tab) => (
-        <Tabs.Tab value={tab} key={tab}>
-            {tab}
+        <a
+            href={tab === "home" ? "/" : `/${tab}`}
+            className={classes.link}
+            key={tab}
+        >
+            {upperFirst(tab)}
+        </a>
+    ));
+
+    return (
+        <Drawer
+            opened={opened}
+            onClose={onClose}
+            size="lg"
+            padding="md"
+            hiddenFrom="sm"
+            zIndex={1000000}
+        >
+            <Drawer.Header>
+                <IconUser />
+            </Drawer.Header>
+            <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
+                <Divider my="sm" />
+                {items}
+                <Divider my="sm" />
+                <Group justify="center" grow pb="xl" px="md">
+                    <Button component="a" href="/profile">
+                        Profile
+                    </Button>
+                    <Button
+                        onClick={() => signOut({ callbackUrl: "/auth" })}
+                        variant="outline"
+                        color="red"
+                    >
+                        Logout
+                    </Button>
+                </Group>
+            </ScrollArea>
+        </Drawer>
+    );
+};
+
+export default function Navigation() {
+    const [opened, { toggle, close }] = useDisclosure(false);
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const items = tabs.map((tab) => (
+        <Tabs.Tab value={tab === "home" ? "/" : `/${tab}`} key={tab}>
+            {upperFirst(tab)}
         </Tabs.Tab>
     ));
 
@@ -42,83 +166,14 @@ export default function Navigation() {
                 <Group justify="space-between">
                     <IconUser />
 
+                    <UserMenu />
+
                     <Burger
                         opened={opened}
                         onClick={toggle}
                         hiddenFrom="xs"
                         size="sm"
                     />
-
-                    <Menu
-                        width={260}
-                        position="bottom-end"
-                        transitionProps={{ transition: "pop-top-right" }}
-                        onClose={() => setUserMenuOpened(false)}
-                        onOpen={() => setUserMenuOpened(true)}
-                        withinPortal
-                    >
-                        <Menu.Target>
-                            <UnstyledButton
-                                className={cx(classes.user, {
-                                    [classes.userActive]: userMenuOpened,
-                                })}
-                            >
-                                <Group gap={7}>
-                                    <Avatar radius="xl" size={20} />
-                                    <Text fw={500} size="sm" lh={1} mr={3}>
-                                        {`${
-                                            session
-                                                ? session?.user.firstName
-                                                : ""
-                                        } ${
-                                            session
-                                                ? session?.user.lastName
-                                                : ""
-                                        }`}
-                                    </Text>
-                                    <IconChevronDown
-                                        style={{
-                                            width: rem(12),
-                                            height: rem(12),
-                                        }}
-                                        stroke={1.5}
-                                    />
-                                </Group>
-                            </UnstyledButton>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Label>Settings</Menu.Label>
-                            <Menu.Item
-                                leftSection={
-                                    <IconSettings
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        stroke={1.5}
-                                    />
-                                }
-                            >
-                                Profile
-                            </Menu.Item>
-                            <Menu.Item
-                                leftSection={
-                                    <IconLogout
-                                        style={{
-                                            width: rem(16),
-                                            height: rem(16),
-                                        }}
-                                        stroke={1.5}
-                                    />
-                                }
-                                onClick={() =>
-                                    signOut({ callbackUrl: "/auth" })
-                                }
-                            >
-                                Logout
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
                 </Group>
             </Container>
             <Container size="md">
@@ -131,10 +186,13 @@ export default function Navigation() {
                         list: classes.tabsList,
                         tab: classes.tab,
                     }}
+                    value={pathname}
+                    onChange={(value) => router.push(value)}
                 >
                     <Tabs.List>{items}</Tabs.List>
                 </Tabs>
             </Container>
+            <MobileMenu opened={opened} onClose={close} />
         </div>
     );
 }
