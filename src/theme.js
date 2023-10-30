@@ -3,6 +3,7 @@
 import { createTheme } from "@mantine/core";
 
 export const theme = createTheme({
+    white: "#F3F3F3",
     colors: {
         primary: [
             "#DAC0A3",
@@ -43,8 +44,8 @@ export const theme = createTheme({
             "#EEE7B3",
         ],
     },
+    fontFamily: "Poppins, sans-serif",
     headings: {
-        fontFamily: "Poppins, sans-serif",
         sizes: {
             h1: {
                 fontWeight: 600,
