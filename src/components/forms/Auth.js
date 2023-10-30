@@ -68,6 +68,7 @@ export default function Login(props) {
                                     )
                                 }
                                 radius="md"
+                                error={form.errors.firstName}
                             />
                             <TextInput
                                 required={type === "register"}
@@ -80,6 +81,7 @@ export default function Login(props) {
                                         event.currentTarget.value
                                     )
                                 }
+                                error={form.errors.lastName}
                                 radius="md"
                             />
                         </>
@@ -88,7 +90,7 @@ export default function Login(props) {
                     <TextInput
                         required
                         label="Email"
-                        placeholder="hello@mantine.dev"
+                        placeholder="your@email.com"
                         value={form.values.email}
                         onChange={(event) =>
                             form.setFieldValue(
