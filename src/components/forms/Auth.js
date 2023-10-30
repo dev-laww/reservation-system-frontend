@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import {
@@ -12,8 +13,19 @@ import {
     Anchor,
     Stack,
 } from "@mantine/core";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login(props) {
+    const { data: session } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (session) {
+            router.push("/");
+        }
+    }, [session]);
+
     const [type, toggle] = useToggle(["login", "register"]);
     const form = useForm({
         initialValues: {
@@ -21,7 +33,8 @@ export default function Login(props) {
             firstName: "",
             lastName: "",
             password: "",
-            confirmPassword: "",
+            passwordConfirmation: "",
+            phoneNumber: "",
         },
 
         validate: {
@@ -32,9 +45,13 @@ export default function Login(props) {
                     : val.length <= 6
                     ? "Password should include at least 6 characters"
                     : null,
-            confirmPassword: (val) =>
+            passwordConfirmation: (val) =>
                 val !== form.values.password && type === "register"
                     ? "Passwords do not match"
+                    : null,
+            phoneNumber: (val) => 
+                val.length < 11 && type === "register" && !(/((\+63)|0)[.\- ]?9[0-9]{2}[.\- ]?[0-9]{3}[.\- ]?[0-9]{4}/.test(val))
+                    ? "Invalid phone number"
                     : null,
         },
     });
@@ -47,7 +64,41 @@ export default function Login(props) {
 
             <form
                 onSubmit={form.onSubmit(
-                    (values, _event) => console.log(values),
+                    async (values, _event) => {
+                        if (type == "login") {
+                            const result = await signIn("credentials", {
+                                redirect: false,
+                                email: values.email,
+                                password: values.password, 
+                            });
+
+                            if (!result.ok) {
+                                form.setErrors({
+                                    email: "Invalid email or password",
+                                    password: "Invalid email or password",
+                                });
+
+                            }
+
+                        } else {
+                            const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(values),
+                            })
+
+                            const res = await result.json()
+
+                            if (result.status !== 200 && res.detail === "Email already exists") {
+                                form.setFieldError("email", res.detail)
+                            } else {
+                                await signIn("credentials", {
+                                    email: values.email,
+                                    password: values.password, 
+                                });
+                            }
+                        }
+                    },
                     (validationErrors, _values, _event) => {
                         console.log(validationErrors);
                     }
@@ -84,6 +135,20 @@ export default function Login(props) {
                                 error={form.errors.lastName}
                                 radius="md"
                             />
+                            <TextInput
+                                required={type === "register"}
+                                label="Phone Number"
+                                placeholder="09123456789"
+                                value={form.values.phoneNumber}
+                                onChange={(event) =>
+                                    form.setFieldValue(
+                                        "phoneNumber",
+                                        event.currentTarget.value
+                                    )
+                                }
+                                error={form.errors.phoneNumber && "Invalid phone number"}
+                                radius="md"
+                            />
                         </>
                     )}
 
@@ -98,10 +163,9 @@ export default function Login(props) {
                                 event.currentTarget.value
                             )
                         }
-                        error={form.errors.email && "Invalid email"}
+                        error={form.errors.email}
                         radius="md"
                     />
-
                     <PasswordInput
                         required
                         label="Password"
@@ -113,10 +177,7 @@ export default function Login(props) {
                                 event.currentTarget.value
                             )
                         }
-                        error={
-                            form.errors.password &&
-                            "Password should include at least 6 characters"
-                        }
+                        error={form.errors.password}
                         radius="md"
                     />
 
@@ -125,15 +186,15 @@ export default function Login(props) {
                             required={type === "register"}
                             label="Confirm Password"
                             placeholder="Your password"
-                            value={form.values.confirmPassword}
+                            value={form.values.passwordConfirmation}
                             onChange={(event) =>
                                 form.setFieldValue(
-                                    "confirmPassword",
+                                    "passwordConfirmation",
                                     event.currentTarget.value
                                 )
                             }
                             error={
-                                form.errors.confirmPassword &&
+                                form.errors.passwordConfirmation &&
                                 "Passwords do not match"
                             }
                             radius="md"
