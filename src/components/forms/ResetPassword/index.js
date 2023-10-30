@@ -35,7 +35,13 @@ export default function ResetPassword({ token }) {
             <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
                 <form
                     onSubmit={form.onSubmit(
-                        (values, _event) => console.log(values),
+                        async (values, _event) => {
+                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ ...values, token }),
+                            })
+                        },
                         (validationErrors, _values, _event) => {
                             console.log(validationErrors);
                         }

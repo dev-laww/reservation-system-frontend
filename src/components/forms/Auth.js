@@ -77,7 +77,7 @@ export default function Login(props) {
                                     email: "Invalid email or password",
                                     password: "Invalid email or password",
                                 });
-
+                                
                             }
 
                         } else {
@@ -96,6 +96,8 @@ export default function Login(props) {
                                     email: values.email,
                                     password: values.password, 
                                 });
+
+                                router.push("/")
                             }
                         }
                     },
