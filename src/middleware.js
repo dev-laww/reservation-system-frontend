@@ -15,7 +15,7 @@ export async function middleware(request) {
 
     if (!session && !pathname.startsWith("/auth")) return NextResponse.redirect(new URL("/auth", request.nextUrl))
 
-    if (!session.admin && adminPaths.some(path => pathname.startsWith(path))) return NextResponse.rewrite(new URL("/not-found", request.nextUrl))
+    if (!session.admin && adminPaths.some(path => pathname === path)) return NextResponse.rewrite(new URL("/not-found", request.nextUrl))
 
     return NextResponse.next()
 }
