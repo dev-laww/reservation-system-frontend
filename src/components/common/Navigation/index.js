@@ -29,7 +29,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
 
-const tabs = ["home", "properties", "tenants", "bookings", "payments"];
+const tabs = ["home", "properties"];
+const adminTabs = ["tenants", "bookings", "payments"];
 
 const UserMenu = () => {
     const { data: session } = useSession();
@@ -105,12 +106,18 @@ const UserMenu = () => {
 };
 
 const MobileMenu = ({ opened, onClose }) => {
+    const { data: session } = useSession();
     const items = tabs.map((tab) => (
         <a
             href={tab === "home" ? "/" : `/${tab}`}
             className={classes.link}
             key={tab}
         >
+            {upperFirst(tab)}
+        </a>
+    ));
+    const adminItems = adminTabs.map((tab) => (
+        <a href={`/${tab}`} className={classes.link} key={tab}>
             {upperFirst(tab)}
         </a>
     ));
@@ -130,6 +137,7 @@ const MobileMenu = ({ opened, onClose }) => {
             <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
                 <Divider my="sm" />
                 {items}
+                {session?.user.admin && adminItems}
                 <Divider my="sm" />
                 <Group justify="center" grow pb="xl" px="md">
                     <Button component="a" href="/profile" color="secondary">
@@ -150,11 +158,17 @@ const MobileMenu = ({ opened, onClose }) => {
 
 export default function Navigation() {
     const [opened, { toggle, close }] = useDisclosure(false);
+    const { data: session } = useSession();
     const router = useRouter();
     const pathname = usePathname();
 
     const items = tabs.map((tab) => (
         <Tabs.Tab value={tab === "home" ? "/" : `/${tab}`} key={tab}>
+            {upperFirst(tab)}
+        </Tabs.Tab>
+    ));
+    const adminItems = adminTabs.map((tab) => (
+        <Tabs.Tab value={`/${tab}`} key={tab}>
             {upperFirst(tab)}
         </Tabs.Tab>
     ));
@@ -191,7 +205,10 @@ export default function Navigation() {
                     value={pathname}
                     onChange={(value) => router.push(value)}
                 >
-                    <Tabs.List>{items}</Tabs.List>
+                    <Tabs.List>
+                        {items}
+                        {session?.user.admin && adminItems}
+                    </Tabs.List>
                 </Tabs>
             </Container>
             <MobileMenu opened={opened} onClose={close} />
