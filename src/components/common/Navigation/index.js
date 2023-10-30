@@ -29,8 +29,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
 
-const tabs = ["home", "properties"];
-const adminTabs = ["tenants", "bookings", "payments"];
+const tabs = ["home"];
+const adminTabs = ["properties", "tenants", "bookings", "payments"];
 
 const UserMenu = () => {
     const { data: session } = useSession();
