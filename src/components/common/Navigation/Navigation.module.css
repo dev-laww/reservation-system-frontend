@@ -48,8 +48,10 @@
             var(--mantine-color-dark-8)
         );
     }
+}
 
-    @media (max-width: $mantine-breakpoint-xs) {
+.hideOnMobile {
+    @media (max-width: $mantine-breakpoint-sm) {
         display: none;
     }
 }

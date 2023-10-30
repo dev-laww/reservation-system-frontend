@@ -5,8 +5,6 @@ import { useState } from "react";
 import {
     Container,
     Drawer,
-    Center,
-    Box,
     Avatar,
     UnstyledButton,
     Group,
@@ -26,6 +24,7 @@ import {
     IconSettings,
     IconChevronDown,
 } from "@tabler/icons-react";
+import { ColorSchemeToggle } from "@src/components/common";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
@@ -126,14 +125,14 @@ const MobileMenu = ({ opened, onClose }) => {
             zIndex={1000000}
         >
             <Drawer.Header>
-                <IconUser />
+                <ColorSchemeToggle />
             </Drawer.Header>
             <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
                 <Divider my="sm" />
                 {items}
                 <Divider my="sm" />
                 <Group justify="center" grow pb="xl" px="md">
-                    <Button component="a" href="/profile">
+                    <Button component="a" href="/profile" color="secondary">
                         Profile
                     </Button>
                     <Button
@@ -166,7 +165,10 @@ export default function Navigation() {
                 <Group justify="space-between">
                     <IconUser />
 
-                    <UserMenu />
+                    <Group gap={10} className={classes.hideOnMobile}>
+                        <UserMenu />
+                        <ColorSchemeToggle />
+                    </Group>
 
                     <Burger
                         opened={opened}
