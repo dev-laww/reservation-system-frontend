@@ -51,7 +51,7 @@ export default function Filters({ searchParams }) {
                     })}
                 >
                     <Grid>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <TextInput
                                 label="Min Price"
                                 placeholder={form.values.min_price}
@@ -64,7 +64,7 @@ export default function Filters({ searchParams }) {
                                 }
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <TextInput
                                 label="Max Price"
                                 placeholder={form.values.max_price}
@@ -77,7 +77,7 @@ export default function Filters({ searchParams }) {
                                 }
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <TextInput
                                 label="Price"
                                 placeholder={form.values.price}
@@ -90,7 +90,7 @@ export default function Filters({ searchParams }) {
                                 }
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <TextInput
                                 label="Min Occupancy"
                                 placeholder={form.values.min_occupancy}
@@ -103,7 +103,7 @@ export default function Filters({ searchParams }) {
                                 }
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <TextInput
                                 label="Max Occupancy"
                                 placeholder={form.values.max_occupancy}
@@ -116,7 +116,7 @@ export default function Filters({ searchParams }) {
                                 }
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <TextInput
                                 label="Occupancy"
                                 placeholder={form.values.occupancy}
@@ -129,7 +129,7 @@ export default function Filters({ searchParams }) {
                                 }
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <Select
                                 searchable
                                 label="Sort by"
@@ -150,7 +150,7 @@ export default function Filters({ searchParams }) {
                                 ]}
                             />
                         </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
                             <Select
                                 searchable
                                 label="Order by"
@@ -167,6 +167,35 @@ export default function Filters({ searchParams }) {
                                     {
                                         value: "desc",
                                         label: "Descending",
+                                    },
+                                ]}
+                            />
+                        </Grid.Col>
+                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
+                            <Select
+                                searchable
+                                label="Type"
+                                placeholder="Pick value"
+                                value={form.values.type}
+                                onChange={(value) =>
+                                    form.setFieldValue("type", value)
+                                }
+                                data={[
+                                    {
+                                        value: "house",
+                                        label: "Whole House",
+                                    },
+                                    {
+                                        value: "studio",
+                                        label: "Studio",
+                                    },
+                                    {
+                                        value: "1_bedroom",
+                                        label: "1 Bedroom",
+                                    },
+                                    {
+                                        value: "2_bedroom",
+                                        label: "2 Bedroom",
                                     },
                                 ]}
                             />
