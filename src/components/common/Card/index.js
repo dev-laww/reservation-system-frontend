@@ -6,68 +6,66 @@ import {
     Text,
     Grid,
     Group,
-    Badge,
     Button,
-    HoverCard,
+    rem,
 } from "@mantine/core";
+import { IconStar } from "@tabler/icons-react";
 import classes from "./Card.module.css";
 
 export default function Card({ data }) {
     const { images, name, price, city, description, id } = data;
 
     return (
-        <HoverCard openDelay={1000}>
-            <HoverCard.Target>
-                <MantineCard
-                    withBorder
+        <MantineCard withBorder radius="md" p="md" className={classes.card}>
+            <MantineCard.Section>
+                <Image src={images[0].url} alt={name} height={rem(50)}/>
+            </MantineCard.Section>
+
+            <Group justify="space-between" mt="lg">
+                <Text fw={500} fz="lg">
+                    {name}, {city}
+                </Text>
+
+                <Group gap={5}>
+                    <IconStar style={{ width: rem(16), height: rem(16) }} />
+                    <Text fz="xs" fw={500}>
+                        4.78
+                    </Text>
+                </Group>
+            </Group>
+
+            <Text fz="sm" c="dimmed" mt="sm" truncate="end">
+                {description}
+            </Text>
+
+            <Group justify="space-between" mt="md">
+                <div>
+                    <Text fz="xl" span fw={500} className={classes.price}>
+                        ${price.toFixed(2)}
+                    </Text>
+                    <Text span fz="sm" c="dimmed">
+                        {" "}
+                        / night
+                    </Text>
+                </div>
+
+                <Button
                     radius="md"
-                    p="md"
-                    className={classes.card}
+                    color="secondary"
+                    fullWidth
+                    component="a"
+                    href={`/properties/${id}`}
                 >
-                    <MantineCard.Section>
-                        <Image src={images[0].url} alt={name} height={120} />
-                    </MantineCard.Section>
-
-                    <MantineCard.Section className={classes.section} mt="md">
-                        <Group justify="space-between">
-                            <Text fz="sm" fw={500}>
-                                {name}
-                            </Text>
-                            <Badge size="sm" variant="light" color="secondary">
-                                {city}
-                            </Badge>
-                        </Group>
-                    </MantineCard.Section>
-
-                    <MantineCard.Section className={classes.section}>
-                        <Text mt="md" className={classes.label} c="dimmed">
-                            {price} per night
-                        </Text>
-                    </MantineCard.Section>
-
-                    <Group mt="xs">
-                        <Button
-                            radius="md"
-                            color="secondary"
-                            fullWidth
-                            component="a"
-                            href={`/properties/${id}`}
-                        >
-                            Show details
-                        </Button>
-                    </Group>
-                </MantineCard>
-            </HoverCard.Target>
-            <HoverCard.Dropdown>
-                <Text>{description}</Text>
-            </HoverCard.Dropdown>
-        </HoverCard>
+                    Show details
+                </Button>
+            </Group>
+        </MantineCard>
     );
 }
 
 export function GridCard({ item }) {
     return (
-        <Grid.Col span={{ sm: 12, md: 6, lg: 3 }}>
+        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
             <Card data={item} />
         </Grid.Col>
     );

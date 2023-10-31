@@ -3,7 +3,6 @@
         var(--mantine-color-white),
         var(--mantine-color-dark-7)
     );
-    max-height: rem(350px);
     min-height: fit-content;
 }
 
@@ -19,4 +18,8 @@
     text-transform: uppercase;
     font-size: var(--mantine-font-size-xs);
     font-weight: 700;
+}
+
+.price {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 }
