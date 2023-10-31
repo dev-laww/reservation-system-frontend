@@ -3,17 +3,19 @@
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Table, Group, Text, ActionIcon, rem } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 const Property = ({ item }) => {
     const { name, price, id } = item;
     const [opened, { open, close }] = useDisclosure(false);
+    const router = useRouter();
     const handleDelete = (id) => {
         console.log(id);
     };
 
     return (
         <>
-            <Table.Tr>
+            <Table.Tr onClick={() => router.push(`/properties/${id}`)}>
                 <Table.Td>
                     <Text fz="sm">{name}</Text>
                 </Table.Td>
