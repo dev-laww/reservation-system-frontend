@@ -77,7 +77,7 @@ export default function Tenants({ data }) {
 
     return (
         <Table.ScrollContainer minWidth={800}>
-            <Table verticalSpacing="md">
+            <Table verticalSpacing="md" highlightOnHover>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
         </Table.ScrollContainer>
