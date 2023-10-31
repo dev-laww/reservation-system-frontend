@@ -24,7 +24,7 @@ import {
     IconSettings,
     IconChevronDown,
 } from "@tabler/icons-react";
-import { ColorSchemeToggle } from "@src/components/common";
+import { ColorSchemeToggle, Notification } from "@src/components/common";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
@@ -133,6 +133,7 @@ const MobileMenu = ({ opened, onClose }) => {
         >
             <Drawer.Header>
                 <ColorSchemeToggle />
+                <Notification />
             </Drawer.Header>
             <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
                 <Divider my="sm" />
@@ -182,6 +183,7 @@ export default function Navigation() {
                     <Group gap={10} className={classes.hideOnMobile}>
                         <UserMenu />
                         <ColorSchemeToggle />
+                        <Notification />
                     </Group>
 
                     <Burger
