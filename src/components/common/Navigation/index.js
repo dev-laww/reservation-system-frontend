@@ -30,7 +30,7 @@ import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
 
 const tabs = ["home"];
-const adminTabs = ["properties", "tenants", "bookings", "payments"];
+const adminTabs = ["properties", "tenants", "payments"];
 
 const UserMenu = () => {
     const { data: session } = useSession();
