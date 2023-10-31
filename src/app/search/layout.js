@@ -1,9 +1,4 @@
-import { Container, Grid } from "@mantine/core";
-import { Navigation, GridCard } from "@components/common";
-import { Filters } from "@components/forms";
-import { authOptions } from "@lib/auth";
-import { getServerSession } from "next-auth";
-import { fetchData } from "@utils/http";
+import { Navigation } from "@components/common";
 
 export const metadata = {
     title: "Reservation System - Search",
@@ -11,10 +6,10 @@ export const metadata = {
 }
 
 export default async function Layout({ children, searchParams }) {
+    console.log(searchParams);
     return (
         <>
             <Navigation />
-            <Filters searchParams={searchParams} />
             {children}
         </>
     );

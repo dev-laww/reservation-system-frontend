@@ -1,5 +1,5 @@
 import { Container, Grid } from "@mantine/core";
-import { Navigation, GridCard } from "@components/common";
+import { GridCard } from "@components/common";
 import { Filters } from "@components/forms";
 import { authOptions } from "@lib/auth";
 import { getServerSession } from "next-auth";
@@ -20,6 +20,7 @@ export default async function Search({ searchParams }) {
 
     return (
         <>
+            <Filters searchParams={searchParams} />
             <Container size="md" mt="md">
                 <Grid>{items}</Grid>
             </Container>
