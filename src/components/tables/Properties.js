@@ -1,8 +1,16 @@
 "use client";
 
 import { useDisclosure } from "@mantine/hooks";
-import { Modal, Table, Group, Text, ActionIcon, rem } from "@mantine/core";
-import { IconPencil, IconTrash } from "@tabler/icons-react";
+import {
+    Modal,
+    Table,
+    Group,
+    Text,
+    ActionIcon,
+    Button,
+    rem,
+} from "@mantine/core";
+import { IconPencil, IconTrash,IconExternalLink } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 
 const Property = ({ item }) => {
@@ -15,7 +23,7 @@ const Property = ({ item }) => {
 
     return (
         <>
-            <Table.Tr onClick={() => router.push(`/properties/${id}`)}>
+            <Table.Tr>
                 <Table.Td>
                     <Text fz="sm">{name}</Text>
                 </Table.Td>
@@ -44,6 +52,16 @@ const Property = ({ item }) => {
                                 stroke={1.5}
                             />
                         </ActionIcon>
+                        <ActionIcon
+                            variant="subtle"
+                            color="secondary"
+                            onClick={() => router.push(`/properties/${id}`)}
+                        >
+                            <IconExternalLink
+                                style={{ width: rem(16), height: rem(16) }}
+                                stroke={1.5}
+                            />
+                        </ActionIcon>
                     </Group>
                 </Table.Td>
             </Table.Tr>
@@ -59,18 +77,32 @@ const Property = ({ item }) => {
 
 export default function Properties({ data }) {
     const rows = data.map((item) => <Property key={item.id} item={item} />);
+    const [opened, { open, close }] = useDisclosure(false);
 
     return (
-        <Table.ScrollContainer minWidth="100%">
-            <Table verticalSpacing="md" highlightOnHover>
-                <Table.Tr>
-                    <Table.Th>Property Name</Table.Th>
-                    <Table.Th>Description</Table.Th>
-                    <Table.Th>Price</Table.Th>
-                    <Table.Th />
-                </Table.Tr>
-                <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-        </Table.ScrollContainer>
+        <>
+            <Group gap={0} justify="flex-end">
+                <Button color="secondary" variant="light" onClick={open}>
+                    Add Property
+                </Button>
+            </Group>
+            <Table.ScrollContainer minWidth="100%">
+                <Table verticalSpacing="md" highlightOnHover>
+                    <Table.Tr>
+                        <Table.Th>Property Name</Table.Th>
+                        <Table.Th>Description</Table.Th>
+                        <Table.Th>Price</Table.Th>
+                        <Table.Th />
+                    </Table.Tr>
+                    <Table.Tbody>{rows}</Table.Tbody>
+                </Table>
+            </Table.ScrollContainer>
+            <Modal
+                opened={opened}
+                onClose={close}
+                title="Add Property"
+                centered
+            ></Modal>
+        </>
     );
 }
