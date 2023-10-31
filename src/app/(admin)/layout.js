@@ -1,4 +1,4 @@
-import { Center } from "@mantine/core";
+import { Container } from "@mantine/core";
 import { Navigation } from "@src/components/common";
 
 export const metadata = {
@@ -10,13 +10,9 @@ export default function Layout({ children }) {
     return (
         <>
             <Navigation />
-            <Center
-                style={{
-                    height: "100vh"
-                }}
-            >
+            <Container size="md" mt="md">
                 {children}
-            </Center>
+            </Container>
         </>
     );
 }
