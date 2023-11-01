@@ -17,6 +17,19 @@ import { useRouter } from "next/navigation";
 export default function Filters({ searchParams }) {
     const form = useForm({
         initialValues: searchParams,
+        validate: {
+            min_price: (val) =>
+                val && isNaN(val) ? "Invalid min price" : null,
+            max_price: (val) =>
+                val && isNaN(val) ? "Invalid max price" : null,
+            price: (val) => (val && isNaN(val) ? "Invalid price" : null),
+            min_occupancy: (val) =>
+                val && isNaN(val) ? "Invalid min occupancy" : null,
+            max_occupancy: (val) =>
+                val && isNaN(val) ? "Invalid max occupancy" : null,
+            occupancy: (val) =>
+                val && isNaN(val) ? "Invalid occupancy" : null,
+        }
     });
     const [opened, { toggle }] = useDisclosure(false);
     const router = useRouter();
@@ -56,6 +69,7 @@ export default function Filters({ searchParams }) {
                                 label="Min Price"
                                 placeholder={form.values.min_price}
                                 value={form.values.min_price}
+                                error={form.errors.min_price}
                                 onChange={(event) =>
                                     form.setFieldValue(
                                         "min_price",
@@ -69,6 +83,7 @@ export default function Filters({ searchParams }) {
                                 label="Max Price"
                                 placeholder={form.values.max_price}
                                 value={form.values.max_price}
+                                error={form.errors.max_price}
                                 onChange={(event) =>
                                     form.setFieldValue(
                                         "max_price",
@@ -82,6 +97,7 @@ export default function Filters({ searchParams }) {
                                 label="Price"
                                 placeholder={form.values.price}
                                 value={form.values.price}
+                                error={form.errors.price}
                                 onChange={(event) =>
                                     form.setFieldValue(
                                         "price",
@@ -95,9 +111,10 @@ export default function Filters({ searchParams }) {
                                 label="Min Occupancy"
                                 placeholder={form.values.min_occupancy}
                                 value={form.values.min_occupancy}
+                                error={form.errors.min_occupancy}
                                 onChange={(event) =>
                                     form.setFieldValue(
-                                        "min_ccupancy",
+                                        "min_occupancy",
                                         event.currentTarget.value
                                     )
                                 }
@@ -108,9 +125,10 @@ export default function Filters({ searchParams }) {
                                 label="Max Occupancy"
                                 placeholder={form.values.max_occupancy}
                                 value={form.values.max_occupancy}
+                                error={form.errors.max_occupancy}
                                 onChange={(event) =>
                                     form.setFieldValue(
-                                        "max_ccupancy",
+                                        "max_occupancy",
                                         event.currentTarget.value
                                     )
                                 }
@@ -121,6 +139,7 @@ export default function Filters({ searchParams }) {
                                 label="Occupancy"
                                 placeholder={form.values.occupancy}
                                 value={form.values.occupancy}
+                                error={form.errors.occupancy}
                                 onChange={(event) =>
                                     form.setFieldValue(
                                         "occupancy",
