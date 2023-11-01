@@ -1,5 +1,6 @@
 export const fetchData = async (url, options = {}, session = null) => {
     const response = await fetch(url, {
+        ...options,
         headers: {
             ...options.headers,
             ...(session?.accessToken && {
