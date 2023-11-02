@@ -5,3 +5,4 @@ export { default as Loader } from "./Loader";
 export { default as Card } from "./Card";
 export { GridCard } from "./Card";
 export { default as Notification } from "./Notification";
+export { default as Images } from "./Images";
