@@ -6,3 +6,4 @@ export { default as Card } from "./Card";
 export { GridCard } from "./Card";
 export { default as Notification } from "./Notification";
 export { default as Images } from "./Images";
+export { default as Reviews } from "./Reviews";
