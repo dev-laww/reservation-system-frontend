@@ -57,11 +57,11 @@ export default function Card({ data }) {
             <Group justify="space-between" mt="md">
                 <div>
                     <Text fz="xl" span fw={500} className={classes.price}>
-                        ${price.toFixed(2)}
+                        Php{price.toFixed(2)}
                     </Text>
                     <Text span fz="sm" c="dimmed">
                         {" "}
-                        / night
+                        / month
                     </Text>
                 </div>
 
