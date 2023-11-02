@@ -9,7 +9,7 @@ import {
     ActionIcon,
     rem,
 } from "@mantine/core";
-import { IconCircleOff, IconCheck } from "@tabler/icons-react";
+import { IconX, IconCheck } from "@tabler/icons-react";
 import { upperFirst } from "@mantine/hooks";
 
 const Payment = ({ item }) => {
@@ -69,7 +69,7 @@ const Payment = ({ item }) => {
                         onClick={() => handleCancelled(id)}
                         disabled={status !== "pending"}
                     >
-                        <IconCircleOff
+                        <IconX
                             style={{ width: rem(16), height: rem(16) }}
                             stroke={1.5}
                         />
