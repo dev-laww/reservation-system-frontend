@@ -10,12 +10,16 @@ import {
     rem,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconPencil, IconBell } from "@tabler/icons-react";
+import { IconTrash, IconBell } from "@tabler/icons-react";
+import { NotifyTenant } from "../forms";
 
 const Tenant = ({ item }) => {
     const { first_name, last_name, email, phone_number } = item;
-    const [editOpened, { open: edit, close: closeEdit }] = useDisclosure(false);
     const [notifyOpened, { open: notify, close: closeNotify }] =useDisclosure(false);
+    
+    const handleRemoveTenant = () => {
+        console.log("Remove tenant");
+    }
 
     return (
         <>
@@ -41,14 +45,14 @@ const Tenant = ({ item }) => {
                 </Table.Td>
                 <Table.Td>
                     <Group gap={0} justify="flex-end">
-                        <ActionIcon variant="subtle" color="gray" onClick={edit}>
-                            <IconPencil
+                        <ActionIcon variant="subtle" color="gray" onClick={notify}>
+                            <IconBell
                                 style={{ width: rem(16), height: rem(16) }}
                                 stroke={1.5}
                             />
                         </ActionIcon>
-                        <ActionIcon variant="subtle" color="gray" onClick={notify}>
-                            <IconBell
+                        <ActionIcon variant="subtle" color="red" onClick={handleRemoveTenant}>
+                            <IconTrash
                                 style={{ width: rem(16), height: rem(16) }}
                                 stroke={1.5}
                             />
@@ -57,17 +61,13 @@ const Tenant = ({ item }) => {
                 </Table.Td>
             </Table.Tr>
             <Modal
-                opened={editOpened}
-                onClose={closeEdit}
-                title="Edit tenant"
-                centered
-            ></Modal>
-            <Modal
                 opened={notifyOpened}
                 onClose={closeNotify}
                 title="Notify tenant"
                 centered
-            ></Modal>
+            >
+                <NotifyTenant tenantId={item.id} close={closeNotify} />
+            </Modal>
         </>
     );
 };
