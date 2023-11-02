@@ -15,15 +15,21 @@ export default function Review({ session }) {
     const handleClose = () => {
         form.reset();
         close();
-    }
+    };
 
     return (
         <>
             <Group justify="flex-end">
-
-            <Button onClick={open} color="secondary">Leave a review</Button>
+                <Button onClick={open} color="secondary" variant="light">
+                    Leave a review
+                </Button>
             </Group>
-            <Modal opened={opened} onClose={handleClose} title="Leave a review" centered>
+            <Modal
+                opened={opened}
+                onClose={handleClose}
+                title="Leave a review"
+                centered
+            >
                 <form
                     onSubmit={form.onSubmit(
                         (values, _event) => console.log(values),
@@ -54,7 +60,9 @@ export default function Review({ session }) {
                         }
                     />
                     <Group mt="sm" justify="flex-end">
-                        <Button type="submit" color="secondary">Submit</Button>
+                        <Button type="submit" color="secondary">
+                            Submit
+                        </Button>
                     </Group>
                 </form>
             </Modal>
