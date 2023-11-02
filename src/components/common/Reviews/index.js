@@ -7,7 +7,7 @@ import {
     TypographyStylesProvider,
     Paper,
     Rating,
-    rem
+    rem,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import classes from "./Review.module.css";
@@ -26,7 +26,7 @@ const Review = ({ data }) => {
                     </Text>
                 </div>
             </Group>
-            <Rating value={rating} readOnly mt="md" ml={rem(54)}/>
+            <Rating value={rating} readOnly mt="md" ml={rem(54)} />
             <TypographyStylesProvider className={classes.body}>
                 <div
                     className={classes.content}
@@ -47,13 +47,10 @@ export default function Reviews({ data }) {
     ));
 
     return (
-        <Carousel
-        slideSize="70%"
-            slideGap="md"
-            loop
-            align="center"
-        >
-            {items}
+        <Carousel slideSize="70%" slideGap="md" loop align="center" withControls={data.length > 0} style={{
+            minHeight: rem(300)
+        }}>
+            {data.length > 0 ? items : <Text c="dimmed">No reviews yet.</Text>}
         </Carousel>
     );
 }
