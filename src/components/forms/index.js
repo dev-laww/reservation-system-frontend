@@ -4,3 +4,4 @@ export { default as ResetPassword } from "./ResetPassword";
 export { default as Filters } from "./Filters";
 export { default as Review } from "./Review";
 export { default as NotifyTenant } from "./NotifyTenant";
+export { default as Rent } from "./Rent";
