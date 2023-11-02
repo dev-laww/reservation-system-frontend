@@ -9,7 +9,7 @@ export default async function Properties() {
     const session = await getServerSession(authOptions);
 
     const properties = await fetchData(
-        `${process.env.API_URL}/api/properties`,
+        `${process.env.API_URL}/properties`,
         {},
         session
     );

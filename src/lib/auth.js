@@ -13,8 +13,8 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 const authUrl =
-                    `${process.env.API_URL}/api/auth` ||
-                    "http://127.0.0.1:8000/api/auth";
+                    `${process.env.API_URL}/auth` ||
+                    `http://localhost:8000/api/auth`;
 
                 console.log(authUrl);
 

@@ -8,7 +8,7 @@ import classes from "./Tenants.module.css";
 export default async function Tenants() {
     const session = await getServerSession(authOptions);
     const tenants = await fetchData(
-        `${process.env.API_URL}/api/tenants`,
+        `${process.env.API_URL}/tenants`,
         {},
         session
     );
