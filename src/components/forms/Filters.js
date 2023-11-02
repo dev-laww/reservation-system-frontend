@@ -23,13 +23,9 @@ export default function Filters({ searchParams }) {
             max_price: (val) =>
                 val && isNaN(val) ? "Invalid max price" : null,
             price: (val) => (val && isNaN(val) ? "Invalid price" : null),
-            min_occupancy: (val) =>
-                val && isNaN(val) ? "Invalid min occupancy" : null,
-            max_occupancy: (val) =>
-                val && isNaN(val) ? "Invalid max occupancy" : null,
             occupancy: (val) =>
                 val && isNaN(val) ? "Invalid occupancy" : null,
-        }
+        },
     });
     const [opened, { toggle }] = useDisclosure(false);
     const router = useRouter();
@@ -101,48 +97,6 @@ export default function Filters({ searchParams }) {
                                 onChange={(event) =>
                                     form.setFieldValue(
                                         "price",
-                                        event.currentTarget.value
-                                    )
-                                }
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
-                            <TextInput
-                                label="Min Occupancy"
-                                placeholder={form.values.min_occupancy}
-                                value={form.values.min_occupancy}
-                                error={form.errors.min_occupancy}
-                                onChange={(event) =>
-                                    form.setFieldValue(
-                                        "min_occupancy",
-                                        event.currentTarget.value
-                                    )
-                                }
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
-                            <TextInput
-                                label="Max Occupancy"
-                                placeholder={form.values.max_occupancy}
-                                value={form.values.max_occupancy}
-                                error={form.errors.max_occupancy}
-                                onChange={(event) =>
-                                    form.setFieldValue(
-                                        "max_occupancy",
-                                        event.currentTarget.value
-                                    )
-                                }
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
-                            <TextInput
-                                label="Occupancy"
-                                placeholder={form.values.occupancy}
-                                value={form.values.occupancy}
-                                error={form.errors.occupancy}
-                                onChange={(event) =>
-                                    form.setFieldValue(
-                                        "occupancy",
                                         event.currentTarget.value
                                     )
                                 }
