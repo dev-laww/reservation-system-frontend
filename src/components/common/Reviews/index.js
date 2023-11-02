@@ -6,14 +6,14 @@ import {
     Group,
     TypographyStylesProvider,
     Paper,
+    Rating,
+    rem
 } from "@mantine/core";
-import { useRef } from "react";
-import Autoplay from "embla-carousel-react";
 import { Carousel } from "@mantine/carousel";
 import classes from "./Review.module.css";
 
 const Review = ({ data }) => {
-    const { comment, user } = data;
+    const { comment, user, rating } = data;
     const { first_name, last_name, email } = user;
     return (
         <Paper withBorder radius="md" className={classes.comment}>
@@ -26,6 +26,7 @@ const Review = ({ data }) => {
                     </Text>
                 </div>
             </Group>
+            <Rating value={rating} readOnly mt="md" ml={rem(54)}/>
             <TypographyStylesProvider className={classes.body}>
                 <div
                     className={classes.content}
@@ -39,8 +40,6 @@ const Review = ({ data }) => {
 };
 
 export default function Reviews({ data }) {
-    const autoplay = useRef(Autoplay());
-
     const items = data.map((item) => (
         <Carousel.Slide key={item.id}>
             <Review data={item} />
