@@ -72,7 +72,7 @@ export default function Card({ data }) {
                     component="a"
                     href={`/properties/${id}`}
                 >
-                    Show details
+                    Rent now
                 </Button>
             </Group>
         </MantineCard>
