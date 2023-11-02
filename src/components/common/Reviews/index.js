@@ -1,6 +1,7 @@
 "use client";
 
 import {
+    Box,
     Text,
     Avatar,
     Group,
@@ -47,10 +48,28 @@ export default function Reviews({ data }) {
     ));
 
     return (
-        <Carousel slideSize="70%" slideGap="md" loop align="center" withControls={data.length > 0} style={{
-            minHeight: rem(300)
-        }}>
-            {data.length > 0 ? items : <Text c="dimmed">No reviews yet.</Text>}
+        <Carousel
+            slideSize="70%"
+            slideGap="md"
+            loop
+            align="center"
+            withControls={data.length > 0}
+        >
+            {data.length > 0 ? (
+                items
+            ) : (
+                <Carousel.Slide
+                    style={{
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: rem(200)
+                    }}
+                >
+                    <Text c="dimmed">No reviews yet</Text>
+                </Carousel.Slide>
+            )}
         </Carousel>
     );
 }
