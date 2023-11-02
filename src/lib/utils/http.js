@@ -1,3 +1,6 @@
+import { authOptions } from "../auth";
+import { getServerSession } from "next-auth";
+
 export const fetchData = async (url, options = {}, session = null) => {
     const response = await fetch(url, {
         ...options,
@@ -37,3 +40,5 @@ export const fetchData = async (url, options = {}, session = null) => {
 
     return data;
 };
+
+export const getSession = async () => getServerSession(authOptions);
