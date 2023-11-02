@@ -9,16 +9,32 @@ import {
     Button,
     rem,
 } from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
 import { IconStar } from "@tabler/icons-react";
 import classes from "./Card.module.css";
 
 export default function Card({ data }) {
     const { images, name, price, city, description, id } = data;
+    const slides = images.map((image) => (
+        <Carousel.Slide key={image.id}>
+            <Image src={image.url} alt={name} />
+        </Carousel.Slide>
+    ));
 
     return (
         <MantineCard withBorder radius="md" p="md" className={classes.card}>
             <MantineCard.Section>
-                <Image src={images[0].url} alt={name} height={rem(50)}/>
+                <Carousel
+                    withIndicators
+                    loop
+                    classNames={{
+                        root: classes.carousel,
+                        controls: classes.carouselControls,
+                        indicator: classes.carouselIndicator,
+                    }}
+                >
+                    {slides}
+                </Carousel>
             </MantineCard.Section>
 
             <Group justify="space-between" mt="lg">
