@@ -5,6 +5,7 @@ export const fetchData = async (url, options = {}, session = null) => {
     const response = await fetch(url, {
         ...options,
         headers: {
+            "Content-Type": "application/json",
             ...options.headers,
             ...(session?.accessToken && {
                 Authorization: `Bearer ${session.accessToken}`,

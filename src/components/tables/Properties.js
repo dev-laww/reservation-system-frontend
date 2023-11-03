@@ -12,13 +12,20 @@ import {
 } from "@mantine/core";
 import { IconPencil, IconTrash,IconExternalLink } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { fetchData } from "@src/lib/utils/http";
+import { useSession } from "next-auth/react";
 
 const Property = ({ item }) => {
+    const { data: session } = useSession();
     const { name, price, id } = item;
     const [opened, { open, close }] = useDisclosure(false);
     const router = useRouter();
-    const handleDelete = (id) => {
-        console.log(id);
+    const handleDelete = async (id) => {
+        await fetchData(`${process.env.NEXT_PUBLIC_API_URL}/properties/${id}`, {
+            method: "DELETE",
+        }, session);
+
+        router.refresh()
     };
 
     return (

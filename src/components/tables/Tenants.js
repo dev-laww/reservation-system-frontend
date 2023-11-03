@@ -12,13 +12,21 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconTrash, IconBell } from "@tabler/icons-react";
 import { NotifyTenant } from "../forms";
+import { useSession } from "next-auth/react";
+import { fetchData } from "@src/lib/utils/http";
 
 const Tenant = ({ item }) => {
-    const { first_name, last_name, email, phone_number } = item;
-    const [notifyOpened, { open: notify, close: closeNotify }] =useDisclosure(false);
+    const { data: session } = useSession();
+    const { id, first_name, last_name, email, phone_number, property } = item;
+    const [notifyOpened, { open: notify, close: closeNotify }] = useDisclosure(false);
     
-    const handleRemoveTenant = () => {
-        console.log("Remove tenant");
+    const handleRemoveTenant = async () => {
+        await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/properties/${property.id}/tenants/${id}`, {
+                method: "DELETE",
+            }, session)
+
+        window.location.reload()
     }
 
     return (
@@ -41,6 +49,12 @@ const Tenant = ({ item }) => {
                     <Text fz="sm">{email}</Text>
                     <Text fz="xs" c="dimmed">
                         Email
+                    </Text>
+                </Table.Td>
+                <Table.Td>
+                    <Text fz="sm">{property.name}</Text>
+                    <Text fz="xs" c="dimmed">
+                        Property
                     </Text>
                 </Table.Td>
                 <Table.Td>

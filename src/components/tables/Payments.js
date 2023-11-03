@@ -11,16 +11,29 @@ import {
 } from "@mantine/core";
 import { IconX, IconCheck } from "@tabler/icons-react";
 import { upperFirst } from "@mantine/hooks";
+import { useSession } from "next-auth/react";
+import { fetchData } from "@src/lib/utils/http";
 
 const Payment = ({ item }) => {
-    const { user, booking, id, status, amount, type } = item;
+    const { data: session } = useSession();
+    const { user, rental, id, status, amount, type } = item;
 
-    const handlePaid = (id) => {
-        console.log(id);
+    const handlePaid = async (id) => {
+        await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/${id}/paid`, {
+                method: "POST"
+            }, session)
+
+        window.location.reload()
     };
 
-    const handleCancelled = (id) => {
-        console.log(id);
+    const handleCancelled = async (id) => {
+        await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/${id}/declined`, {
+                method: "POST"
+            }, session)
+
+        router.reload()
     };
 
     return (
@@ -55,10 +68,10 @@ const Payment = ({ item }) => {
             <Table.Td>${amount.toFixed(2)}</Table.Td>
             <Table.Td>
                 <Text fz="sm" fw={500}>
-                    {booking.property.name}
+                    {rental.property.name}
                 </Text>
                 <Text fz="xs" c="dimmed">
-                    {booking.property.address}
+                    {rental.property.address}
                 </Text>
             </Table.Td>
             <Table.Td>
@@ -103,7 +116,7 @@ export default function Payments({ data }) {
                         <Table.Th>Method</Table.Th>
                         <Table.Th>Status</Table.Th>
                         <Table.Th>Amount</Table.Th>
-                        <Table.Th>Booking</Table.Th>
+                        <Table.Th>Rental</Table.Th>
                         <Table.Th />
                     </Table.Tr>
                 </Table.Thead>

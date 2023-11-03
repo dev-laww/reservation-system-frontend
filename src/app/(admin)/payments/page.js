@@ -15,7 +15,7 @@ export default async function Payments() {
 
     console.log(payments);
     console.log(payments.data[0].user);
-    console.log(payments.data[0].booking);
+    console.log(payments.data[0].rental);
 
     return (
         <Paper shadow="sm" padding="md" className={classes.paper}>

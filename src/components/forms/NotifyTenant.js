@@ -2,8 +2,11 @@
 
 import { Button, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { fetchData } from "@src/lib/utils/http";
+import { useSession } from "next-auth/react";
 
 export default function NotifyTenant({ tenantId, close }) {
+    const { data: session } = useSession();
     const form = useForm({
         initialValues: {
             tenant: tenantId,
@@ -14,8 +17,11 @@ export default function NotifyTenant({ tenantId, close }) {
         },
     });
 
-    const handleSubmit = (values) => {
-        console.log(values);
+    const handleSubmit = async (values) => {
+        await fetchData(`${process.env.NEXT_PUBLIC_API_URL}/tenants/${values.tenant}/notifications`, {
+                method: "POST",
+                body: JSON.stringify({ message: values.message }),
+            }, session)
         close();
     };
 

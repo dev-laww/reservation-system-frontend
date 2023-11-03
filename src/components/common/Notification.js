@@ -51,7 +51,7 @@ export default function Notification() {
             setNotifications(data?.data || null);
         };
 
-        if (open) fetchNotifications();
+        fetchNotifications();
 
         return () => abortController.abort();
     }, [session, open]);
