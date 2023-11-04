@@ -67,7 +67,7 @@ export default async function Property({ params }) {
                     <Text fz="lg" fw={500}>
                         Reviews
                     </Text>
-                    <Review session={session} />
+                    <Review session={session} property_id={id}/>
                 </Group>
                 <Reviews data={reviews} />
             </div>

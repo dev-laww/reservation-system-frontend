@@ -3,8 +3,9 @@
 import { Modal, Button, TextInput, Rating, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { fetchData } from "@src/lib/utils/http";
 
-export default function Review({ session }) {
+export default function Review({ session, property_id }) {
     const [opened, { open, close }] = useDisclosure(false);
     const form = useForm({
         initialValues: {
@@ -12,7 +13,7 @@ export default function Review({ session }) {
             rating: 0,
         },
     });
-    const handleClose = () => {
+    const handleClose = async () => {
         form.reset();
         close();
     };
@@ -32,7 +33,17 @@ export default function Review({ session }) {
             >
                 <form
                     onSubmit={form.onSubmit(
-                        (values, _event) => console.log(values),
+                        async (values, _event) => {
+                            await fetchData(
+                                `${process.env.NEXT_PUBLIC_API_URL}/properties/${property_id}/reviews`,
+                                {
+                                    method: "POST",
+                                    body: JSON.stringify(values),
+                                },
+                                session
+                            );
+                            await handleClose();
+                        },
                         (validationErrors, _values, _event) => {
                             console.log(validationErrors);
                         }
