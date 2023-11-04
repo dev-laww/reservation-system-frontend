@@ -8,7 +8,7 @@ import classes from "./Payments.module.css";
 export default async function Payments() {
     const session = await getServerSession(authOptions);
     const payments = await fetchData(
-        `${process.env.API_URL}/payments`,
+        `${process.env.NEXT_PUBLIC_API_URL}/payments`,
         {},
         session
     );

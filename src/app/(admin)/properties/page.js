@@ -9,13 +9,13 @@ export default async function Properties() {
     const session = await getServerSession(authOptions);
 
     const properties = await fetchData(
-        `${process.env.API_URL}/properties`,
+        `${process.env.NEXT_PUBLIC_API_URL}/properties`,
         {},
         session
     );
 
     return (
-        <Paper shadow="sm" padding="md" className={classes.paper} p="xs" >
+        <Paper shadow="sm" padding="md" className={classes.paper} p="xs">
             <PropertiesTable data={properties.data} />
         </Paper>
     );

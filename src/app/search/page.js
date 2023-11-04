@@ -10,7 +10,7 @@ export default async function Search({ searchParams }) {
     const session = await getServerSession(authOptions);
     const params = new URLSearchParams(searchParams);
     const data = await fetchData(
-        `${process.env.API_URL}/properties?${params.toString()}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/properties?${params.toString()}`,
         {},
         session
     );

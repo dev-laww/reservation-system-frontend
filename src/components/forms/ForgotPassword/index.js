@@ -38,12 +38,16 @@ export default function ForgotPassword() {
                 <form
                     onSubmit={form.onSubmit(
                         async (values, _event) => {
-                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/forgot-password`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify(values),
-                            })
-                            
+                            await fetch(
+                                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/forgot-password`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify(values),
+                                }
+                            );
                         },
                         (validationErrors, _values, _event) => {
                             console.log(validationErrors);

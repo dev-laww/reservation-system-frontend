@@ -8,7 +8,7 @@ import { fetchData } from "@utils/http";
 export default async function Home({ searchParams }) {
     const session = await getServerSession(authOptions);
     const data = await fetchData(
-        `${process.env.API_URL}/properties`,
+        `${process.env.NEXT_PUBLIC_API_URL}/properties`,
         {},
         session
     );

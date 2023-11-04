@@ -49,8 +49,12 @@ export default function Login(props) {
                 val !== form.values.password && type === "register"
                     ? "Passwords do not match"
                     : null,
-            phoneNumber: (val) => 
-                val.length < 11 && type === "register" && !(/((\+63)|0)[.\- ]?9[0-9]{2}[.\- ]?[0-9]{3}[.\- ]?[0-9]{4}/.test(val))
+            phoneNumber: (val) =>
+                val.length < 11 &&
+                type === "register" &&
+                !/((\+63)|0)[.\- ]?9[0-9]{2}[.\- ]?[0-9]{3}[.\- ]?[0-9]{4}/.test(
+                    val
+                )
                     ? "Invalid phone number"
                     : null,
         },
@@ -69,7 +73,7 @@ export default function Login(props) {
                             const result = await signIn("credentials", {
                                 redirect: false,
                                 email: values.email,
-                                password: values.password, 
+                                password: values.password,
                             });
 
                             if (!result.ok) {
@@ -77,27 +81,33 @@ export default function Login(props) {
                                     email: "Invalid email or password",
                                     password: "Invalid email or password",
                                 });
-                                
                             }
-
                         } else {
-                            const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify(values),
-                            })
+                            const result = await fetch(
+                                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify(values),
+                                }
+                            );
 
-                            const res = await result.json()
+                            const res = await result.json();
 
-                            if (result.status !== 200 && res.detail === "Email already exists") {
-                                form.setFieldError("email", res.detail)
+                            if (
+                                result.status !== 200 &&
+                                res.detail === "Email already exists"
+                            ) {
+                                form.setFieldError("email", res.detail);
                             } else {
                                 await signIn("credentials", {
                                     email: values.email,
-                                    password: values.password, 
+                                    password: values.password,
                                 });
 
-                                router.push("/")
+                                router.push("/");
                             }
                         }
                     },
@@ -148,7 +158,10 @@ export default function Login(props) {
                                         event.currentTarget.value
                                     )
                                 }
-                                error={form.errors.phoneNumber && "Invalid phone number"}
+                                error={
+                                    form.errors.phoneNumber &&
+                                    "Invalid phone number"
+                                }
                                 radius="md"
                             />
                         </>
@@ -204,8 +217,17 @@ export default function Login(props) {
                     )}
                 </Stack>
 
-                <Group mt="xl" display="flex" style={{ flexDirection: "column", minWidth: "300px" }}>
-                    <Button type="submit " radius="md" fullWidth color="secondary">
+                <Group
+                    mt="xl"
+                    display="flex"
+                    style={{ flexDirection: "column", minWidth: "300px" }}
+                >
+                    <Button
+                        type="submit "
+                        radius="md"
+                        fullWidth
+                        color="secondary"
+                    >
                         {upperFirst(type)}
                     </Button>
                     <Anchor

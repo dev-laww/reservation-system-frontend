@@ -20,20 +20,26 @@ const Payment = ({ item }) => {
 
     const handlePaid = async (id) => {
         await fetchData(
-            `${process.env.NEXT_PUBLIC_API_URL}/payments/${id}/paid`, {
-                method: "POST"
-            }, session)
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/${id}/paid`,
+            {
+                method: "POST",
+            },
+            session
+        );
 
-        window.location.reload()
+        window.location.reload();
     };
 
     const handleCancelled = async (id) => {
         await fetchData(
-            `${process.env.NEXT_PUBLIC_API_URL}/payments/${id}/declined`, {
-                method: "POST"
-            }, session)
+            `${process.env.NEXT_PUBLIC_API_URL}/payments/${id}/declined`,
+            {
+                method: "POST",
+            },
+            session
+        );
 
-        router.reload()
+        router.reload();
     };
 
     return (

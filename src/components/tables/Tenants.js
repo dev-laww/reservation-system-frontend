@@ -18,16 +18,20 @@ import { fetchData } from "@src/lib/utils/http";
 const Tenant = ({ item }) => {
     const { data: session } = useSession();
     const { id, first_name, last_name, email, phone_number, property } = item;
-    const [notifyOpened, { open: notify, close: closeNotify }] = useDisclosure(false);
-    
+    const [notifyOpened, { open: notify, close: closeNotify }] =
+        useDisclosure(false);
+
     const handleRemoveTenant = async () => {
         await fetchData(
-            `${process.env.NEXT_PUBLIC_API_URL}/properties/${property.id}/tenants/${id}`, {
+            `${process.env.NEXT_PUBLIC_API_URL}/properties/${property.id}/tenants/${id}`,
+            {
                 method: "DELETE",
-            }, session)
+            },
+            session
+        );
 
-        window.location.reload()
-    }
+        window.location.reload();
+    };
 
     return (
         <>
@@ -59,13 +63,21 @@ const Tenant = ({ item }) => {
                 </Table.Td>
                 <Table.Td>
                     <Group gap={0} justify="flex-end">
-                        <ActionIcon variant="subtle" color="gray" onClick={notify}>
+                        <ActionIcon
+                            variant="subtle"
+                            color="gray"
+                            onClick={notify}
+                        >
                             <IconBell
                                 style={{ width: rem(16), height: rem(16) }}
                                 stroke={1.5}
                             />
                         </ActionIcon>
-                        <ActionIcon variant="subtle" color="red" onClick={handleRemoveTenant}>
+                        <ActionIcon
+                            variant="subtle"
+                            color="red"
+                            onClick={handleRemoveTenant}
+                        >
                             <IconTrash
                                 style={{ width: rem(16), height: rem(16) }}
                                 stroke={1.5}

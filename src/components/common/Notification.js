@@ -13,7 +13,7 @@ export default function Notification() {
     const handleRead = async (id) => {
         const data = await fetchData(
             `${
-                process.env.API_URL || "http://localhost:8000/api"
+                process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"
             }/profile/notifications/${id}`,
             { method: "PUT" },
             session
@@ -42,8 +42,8 @@ export default function Notification() {
         const fetchNotifications = async () => {
             const data = await fetchData(
                 `${
-                    process.env.API_URL || `http://127.0.0.1:8000`
-                }/api/profile/notifications`,
+                    process.env.NEXT_PUBLIC_API_URL || `http://127.0.0.1:8000`
+                }/profile/notifications`,
                 {},
                 session
             );
@@ -83,7 +83,7 @@ export default function Notification() {
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
-                {notifications.length > 0 ? (
+                {notifications?.length > 0 ? (
                     notifications.map((notification) => (
                         <Menu.Item
                             key={notification.id}

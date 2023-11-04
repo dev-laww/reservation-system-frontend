@@ -20,7 +20,9 @@ export const fetchData = async (url, options = {}, session = null) => {
         data.detail === "Invalid token"
     ) {
         const newAccessToken = await fetch(
-            `${process.env.API_URL}/auth/refresh`,
+            `${
+                process.env.NEXT_PUBLIC_API_URL || `http://127.0.0.1:8000/api`
+            }/auth/refresh`,
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

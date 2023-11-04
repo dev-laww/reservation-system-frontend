@@ -36,11 +36,16 @@ export default function ResetPassword({ token }) {
                 <form
                     onSubmit={form.onSubmit(
                         async (values, _event) => {
-                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ ...values, token }),
-                            })
+                            await fetch(
+                                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({ ...values, token }),
+                                }
+                            );
                         },
                         (validationErrors, _values, _event) => {
                             console.log(validationErrors);

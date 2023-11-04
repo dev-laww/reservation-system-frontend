@@ -18,10 +18,14 @@ export default function NotifyTenant({ tenantId, close }) {
     });
 
     const handleSubmit = async (values) => {
-        await fetchData(`${process.env.NEXT_PUBLIC_API_URL}/tenants/${values.tenant}/notifications`, {
+        await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/tenants/${values.tenant}/notifications`,
+            {
                 method: "POST",
                 body: JSON.stringify({ message: values.message }),
-            }, session)
+            },
+            session
+        );
         close();
     };
 
