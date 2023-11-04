@@ -1,6 +1,6 @@
 "use client";
 
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Menu, Indicator } from "@mantine/core";
 import { IconBell, IconBellRinging } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { fetchData } from "@utils/http";
@@ -67,19 +67,9 @@ export default function Notification() {
         >
             <Menu.Target>
                 <ActionIcon size="lg" variant="default">
-                    {notifications?.length > 0 ? (
-                        notifications.some(
-                            (notification) => !notification.seen
-                        ) ? (
-                            <IconBellRinging stroke={1} />
-                        ) : (
-                            <IconBell stroke={1} />
-                        )
-                    ) : (
+                    <Indicator  size={6} color="red" offset={-2} disabled={!notifications.some((notification) => !notification.seen)}>
                         <IconBell stroke={1} />
-                    )}
-                    {/* <IconBell stroke={1}/> */}
-                    {/* <IconBellRinging stroke={1} /> */}
+                    </Indicator>
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
@@ -88,8 +78,11 @@ export default function Notification() {
                         <Menu.Item
                             key={notification.id}
                             onClick={() => handleRead(notification.id)}
+                            disabled={notification.seen}
                         >
+                            <Indicator size={6} color="secondary" offset={-2} disabled={notification.seen}>
                             {notification.message}
+                            </Indicator>
                         </Menu.Item>
                     ))
                 ) : (
