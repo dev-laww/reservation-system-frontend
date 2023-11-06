@@ -77,10 +77,10 @@ export default function EditProfile({ session }) {
                             />
                         </Grid.Col>
                     </Grid>
+                    <Button color="secondary" fullWidth type="submit" mt="lg">
+                        Update Profile
+                    </Button>
                 </form>
-                <Button color="secondary" fullWidth type="submit" mt="lg">
-                    Update Profile
-                </Button>
             </Modal>
         </>
     );
