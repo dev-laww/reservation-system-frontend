@@ -4,6 +4,7 @@ import cx from "clsx";
 import { useState } from "react";
 import {
     Container,
+    Image,
     Drawer,
     Avatar,
     UnstyledButton,
@@ -17,11 +18,12 @@ import {
     rem,
 } from "@mantine/core";
 import { useDisclosure, upperFirst } from "@mantine/hooks";
+import { IconChevronDown } from "@tabler/icons-react";
 import {
-    IconUser,
-    IconChevronDown,
-} from "@tabler/icons-react";
-import { ColorSchemeToggle, Notification, ProfileCard } from "@src/components/common";
+    ColorSchemeToggle,
+    Notification,
+    ProfileCard,
+} from "@src/components/common";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
@@ -136,7 +138,13 @@ export default function Navigation() {
         <div className={classes.header}>
             <Container className={classes.mainSection} size="md">
                 <Group justify="space-between">
-                    <IconUser />
+                    <a href="/">
+                        <Image
+                            alt="logo"
+                            src="/logo.png"
+                            style={{ width: "6rem", maxHeight: "100%" }}
+                        />
+                    </a>
 
                     <Group gap={10} className={classes.hideOnMobile}>
                         <UserMenu />
