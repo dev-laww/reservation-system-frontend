@@ -1,9 +1,10 @@
 import "@mantine/core/styles.css";
 import '@mantine/carousel/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/dropzone/styles.css';
 import React from "react";
 import { ColorSchemeScript } from "@mantine/core";
-import { Provider, Navigation, ColorSchemeToggle } from "@components/common";
+import { Provider } from "@components/common";
 
 export const metadata = {
     title: "Reservation System",
