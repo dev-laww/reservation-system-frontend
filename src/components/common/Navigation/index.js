@@ -20,12 +20,10 @@ import {
 import { useDisclosure, upperFirst } from "@mantine/hooks";
 import {
     IconUser,
-    IconLogout,
-    IconSettings,
     IconChevronDown,
 } from "@tabler/icons-react";
-import { ColorSchemeToggle, Notification } from "@src/components/common";
-import { useSession, signOut } from "next-auth/react";
+import { ColorSchemeToggle, Notification, ProfileCard } from "@src/components/common";
+import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import classes from "./Navigation.module.css";
 
@@ -71,35 +69,7 @@ const UserMenu = () => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Label>Settings</Menu.Label>
-                <Menu.Item
-                    component="a"
-                    href="/profile"
-                    leftSection={
-                        <IconSettings
-                            style={{
-                                width: rem(16),
-                                height: rem(16),
-                            }}
-                            stroke={1.5}
-                        />
-                    }
-                >
-                    Profile
-                </Menu.Item>
-                <Menu.Item
-                    leftSection={
-                        <IconLogout
-                            style={{
-                                width: rem(16),
-                                height: rem(16),
-                            }}
-                            stroke={1.5}
-                        />
-                    }
-                    onClick={() => signOut({ callbackUrl: "/auth" })}
-                >
-                    Logout
-                </Menu.Item>
+                <ProfileCard session={session} />
             </Menu.Dropdown>
         </Menu>
     );
@@ -135,23 +105,12 @@ const MobileMenu = ({ opened, onClose }) => {
                 <ColorSchemeToggle />
                 <Notification />
             </Drawer.Header>
-            <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
+            <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md" px="sm">
                 <Divider my="sm" />
                 {items}
                 {session?.user.admin && adminItems}
                 <Divider my="sm" />
-                <Group justify="center" grow pb="xl" px="md">
-                    <Button component="a" href="/profile" color="secondary">
-                        Profile
-                    </Button>
-                    <Button
-                        onClick={() => signOut({ callbackUrl: "/auth" })}
-                        variant="outline"
-                        color="red"
-                    >
-                        Logout
-                    </Button>
-                </Group>
+                <ProfileCard session={session} />
             </ScrollArea>
         </Drawer>
     );
