@@ -14,7 +14,6 @@ import {
     Burger,
     ScrollArea,
     Divider,
-    Button,
     rem,
 } from "@mantine/core";
 import { useDisclosure, upperFirst } from "@mantine/hooks";
