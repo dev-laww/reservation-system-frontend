@@ -12,7 +12,7 @@ export default async function Home({ searchParams }) {
         {},
         session
     );
-    console.log(searchParams);
+
     const items = data.data.map((item) => (
         <GridCard key={item.id} item={item} />
     ));

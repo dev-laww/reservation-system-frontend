@@ -16,15 +16,11 @@ export const authOptions = {
                     `${process.env.NEXT_PUBLIC_API_URL}/auth` ||
                     `http://localhost:8000/api/auth`;
 
-                console.log(authUrl);
-
                 const response = await fetch(`${authUrl}/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(credentials),
                 });
-
-                console.log(response);
 
                 const res = await response.json();
 
