@@ -12,7 +12,8 @@ import {
 } from "@mantine/core";
 import { IconPencil, IconTrash, IconExternalLink } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { fetchData } from "@src/lib/utils/http";
+import { fetchData } from "@utils/http";
+import { CreateProperty } from "../forms";
 import { useSession } from "next-auth/react";
 
 const Property = ({ item }) => {
@@ -42,7 +43,7 @@ const Property = ({ item }) => {
                     <Text fz="sm">{name}</Text>
                 </Table.Td>
                 <Table.Td>
-                    <Text fz="sm">${price.toFixed(2)} / night</Text>
+                    <Text fz="sm">${price.toFixed(2)} / month</Text>
                 </Table.Td>
                 <Table.Td>
                     <Group gap={0} justify="flex-end">
@@ -113,7 +114,9 @@ export default function Properties({ data }) {
                 onClose={close}
                 title="Add Property"
                 centered
-            ></Modal>
+            >
+                <CreateProperty />
+            </Modal>
         </>
     );
 }
