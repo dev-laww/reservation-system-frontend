@@ -7,7 +7,7 @@ import classes from "./Images.module.css";
 export default function Images({ data }) {
     const slides = data.map((image) => (
         <Carousel.Slide key={image.id}>
-            <Image src={image.url} alt="asdasd" />
+            <Image src={image.url} alt="" />
         </Carousel.Slide>
     ));
 
