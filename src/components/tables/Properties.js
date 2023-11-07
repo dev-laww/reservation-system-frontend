@@ -13,7 +13,7 @@ import {
 import { IconPencil, IconTrash, IconExternalLink } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { fetchData } from "@utils/http";
-import { CreateProperty } from "../forms";
+import { CreateProperty, EditProperty } from "../forms";
 import { useSession } from "next-auth/react";
 
 const Property = ({ item }) => {
@@ -77,12 +77,9 @@ const Property = ({ item }) => {
                     </Group>
                 </Table.Td>
             </Table.Tr>
-            <Modal
-                opened={opened}
-                onClose={close}
-                title={name}
-                centered
-            ></Modal>
+            <Modal opened={opened} onClose={close} title={name} centered>
+                <EditProperty data={item} />
+            </Modal>
         </>
     );
 };
