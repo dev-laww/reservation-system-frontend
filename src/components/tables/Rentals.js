@@ -12,20 +12,59 @@ import {
 import { IconX, IconCheck } from "@tabler/icons-react";
 import { upperFirst } from "@mantine/hooks";
 import { useSession } from "next-auth/react";
+import { fetchData } from "@utils/http";
 
 const Rental = ({ item }) => {
     const { data: session } = useSession();
     const { user, id, status, payment, start_date, end_date } = item;
 
     const handlePaid = async (paymentId) => {
+        await fetchData(
+            `${
+                process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"
+            }/payments/${paymentId}/paid`,
+            { method: "POST" },
+            session
+        );
+
+        window.location.reload();
     };
 
     const handleCancelled = async (paymentId) => {
+        await fetchData(
+            `${
+                process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"
+            }/payments/${paymentId}/declined`,
+            { method: "POST" },
+            session
+        );
+
+        window.location.reload();
     };
 
-    const handleAccept = async (id) => {};
+    const handleAccept = async (id) => {
+        await fetchData(
+            `${
+                process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"
+            }/properties/rentals/${id}/accept`,
+            { method: "POST" },
+            session
+        );
 
-    const handleReject = async (id) => {};
+        window.location.reload();
+    };
+
+    const handleReject = async (id) => {
+        await fetchData(
+            `${
+                process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"
+            }/properties/rentals/${id}/decline`,
+            { method: "POST" },
+            session
+        );
+
+        window.location.reload();
+    };
 
     return (
         <Table.Tr>
@@ -109,7 +148,9 @@ const Rental = ({ item }) => {
                         variant="subtle"
                         color="red"
                         onClick={() => handleReject(id)}
-                        disabled={status !== "pending" || payment.status !== "paid"}
+                        disabled={
+                            status !== "pending" || payment.status !== "paid"
+                        }
                     >
                         <IconX
                             style={{ width: rem(16), height: rem(16) }}
@@ -120,7 +161,9 @@ const Rental = ({ item }) => {
                         variant="subtle"
                         color="green"
                         onClick={() => handleAccept(id)}
-                        disabled={status !== "pending" || payment.status !== "paid"}
+                        disabled={
+                            status !== "pending" || payment.status !== "paid"
+                        }
                     >
                         <IconCheck
                             style={{ width: rem(16), height: rem(16) }}
