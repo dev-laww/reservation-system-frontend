@@ -85,7 +85,16 @@ const Property = ({ item }) => {
 };
 
 export default function Properties({ data }) {
-    const rows = data.map((item) => <Property key={item.id} item={item} />);
+    const rows =
+        data.length > 0 ? (
+            data.map((item) => <Property key={item.id} item={item} />)
+        ) : (
+            <Table.Tr>
+                <Table.Td>
+                    <Text fz="sm">No properties</Text>
+                </Table.Td>
+            </Table.Tr>
+        );
     const [opened, { open, close }] = useDisclosure(false);
 
     return (
