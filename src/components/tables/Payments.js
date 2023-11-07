@@ -111,7 +111,16 @@ const Payment = ({ item }) => {
 };
 
 export default function Payments({ data }) {
-    const rows = data.map((item) => <Payment key={item.id} item={item} />);
+    const rows =
+        data.length > 0 ? (
+            data.map((item) => <Payment key={item.id} item={item} />)
+        ) : (
+            <Table.Tr>
+                <Table.Td>
+                    <Text fz="sm">No payments</Text>
+                </Table.Td>
+            </Table.Tr>
+        );
 
     return (
         <Table.ScrollContainer minWidth={800}>
