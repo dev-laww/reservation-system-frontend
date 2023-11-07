@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, TextInput, Grid, Text, Badge } from "@mantine/core";
+import { Button, TextInput, Grid, Text, Select } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
@@ -147,7 +147,7 @@ export default function CreateProperty() {
                             }
                         />
                     </Grid.Col>
-                    <Grid.Col span={{ sm: 12 }}>
+                    <Grid.Col span={{ sm: 12, md: 6 }}>
                         <TextInput
                             required
                             label="Price"
@@ -159,6 +159,35 @@ export default function CreateProperty() {
                                     event.currentTarget.value
                                 )
                             }
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={{ sm: 12, md: 6 }}>
+                        <Select
+                            searchable
+                            label="Type"
+                            placeholder="Pick value"
+                            value={form.values.type}
+                            onChange={(value) =>
+                                form.setFieldValue("type", value)
+                            }
+                            data={[
+                                {
+                                    value: "house",
+                                    label: "Whole House",
+                                },
+                                {
+                                    value: "studio",
+                                    label: "Studio",
+                                },
+                                {
+                                    value: "1_bedroom",
+                                    label: "1 Bedroom",
+                                },
+                                {
+                                    value: "2_bedroom",
+                                    label: "2 Bedroom",
+                                },
+                            ]}
                         />
                     </Grid.Col>
                     <Grid.Col span={{ sm: 12 }}>

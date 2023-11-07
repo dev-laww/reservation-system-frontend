@@ -6,10 +6,9 @@ import {
     Grid,
     Text,
     Image,
-    ActionIcon,
     Box,
     Flex,
-    ScrollArea,
+    Select,
     rem,
 } from "@mantine/core";
 import { IconX, IconTrash } from "@tabler/icons-react";
@@ -74,8 +73,8 @@ export default function EditProperty({ data }) {
     };
 
     const handleDelete = (id) => {
-        console.log('delete image', id)
-    }
+        console.log("delete image", id);
+    };
 
     return (
         <>
@@ -173,7 +172,7 @@ export default function EditProperty({ data }) {
                             }
                         />
                     </Grid.Col>
-                    <Grid.Col span={{ sm: 12 }}>
+                    <Grid.Col span={{ sm: 12, md: 6 }}>
                         <TextInput
                             required
                             label="Price"
@@ -185,6 +184,35 @@ export default function EditProperty({ data }) {
                                     event.currentTarget.value
                                 )
                             }
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={{ sm: 12, md: 6 }}>
+                        <Select
+                            searchable
+                            label="Type"
+                            placeholder="Pick value"
+                            value={form.values.type}
+                            onChange={(value) =>
+                                form.setFieldValue("type", value)
+                            }
+                            data={[
+                                {
+                                    value: "house",
+                                    label: "Whole House",
+                                },
+                                {
+                                    value: "studio",
+                                    label: "Studio",
+                                },
+                                {
+                                    value: "1_bedroom",
+                                    label: "1 Bedroom",
+                                },
+                                {
+                                    value: "2_bedroom",
+                                    label: "2 Bedroom",
+                                },
+                            ]}
                         />
                     </Grid.Col>
                     <Grid.Col>
