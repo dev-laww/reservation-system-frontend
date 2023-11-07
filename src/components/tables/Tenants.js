@@ -99,7 +99,16 @@ const Tenant = ({ item }) => {
 };
 
 export default function Tenants({ data }) {
-    const rows = data.map((item) => <Tenant key={item.id} item={item} />);
+    const rows =
+        data.length > 0 ? (
+            data.map((item) => <Tenant key={item.id} item={item} />)
+        ) : (
+            <Table.Tr>
+                <Table.Td>
+                    <Text fz="sm">No tenants</Text>
+                </Table.Td>
+            </Table.Tr>
+        );
 
     return (
         <Table.ScrollContainer minWidth={800}>
