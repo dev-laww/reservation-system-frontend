@@ -1,11 +1,16 @@
 import { authOptions } from "../auth";
 import { getServerSession } from "next-auth";
 
-export const fetchData = async (url, options = {}, session = null) => {
+export const fetchData = async (url, options = {}, session = null, formData = false) => {
+    if (!formData) {
+        options["headers"] = {
+            "Content-Type": "application/json",
+        };
+    }
+
     const response = await fetch(url, {
         ...options,
         headers: {
-            "Content-Type": "application/json",
             ...options.headers,
             ...(session?.accessToken && {
                 Authorization: `Bearer ${session.accessToken}`,

@@ -3,6 +3,7 @@
 import { Button, Modal, Grid, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { fetchData } from "@src/lib/utils/http";
 
 export default function EditProfile({ session }) {
     const { firstName, lastName, phoneNumber } = session.user;
@@ -28,7 +29,17 @@ export default function EditProfile({ session }) {
             >
                 <form
                     onSubmit={form.onSubmit(
-                        (values, _event) => console.log(values),
+                        (values, _event) => {
+                            fetchData(
+                                `${process.env.NEXT_PUBLIC_API_URL}/profile`,
+                                {
+                                    method: "PUT",
+                                    body: JSON.stringify(values),
+                                },
+                                session
+                            );
+                            close();
+                        },
                         (validationErrors, _values, _event) =>
                             console.log(validationErrors)
                     )}

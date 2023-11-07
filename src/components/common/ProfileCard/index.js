@@ -4,7 +4,7 @@ import { EditProfile } from "@components/forms";
 import classes from "./ProfileCard.module.css";
 
 export default function ProfileCard({ session }) {
-    const { firstName, lastName, phoneNumber, email } = session.user;
+    const { firstName, lastName, phoneNumber, email } = session.data;
 
     return (
         <Card withBorder padding="sm" radius="md" className={classes.card}>

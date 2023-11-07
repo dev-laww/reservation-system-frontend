@@ -6,6 +6,7 @@ import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
+import { fetchData } from "@src/lib/utils/http";
 
 const File = ({ file, onClick }) => {
     return (
@@ -29,7 +30,7 @@ const File = ({ file, onClick }) => {
     );
 };
 
-export default function CreateProperty() {
+export default function CreateProperty({ close }) {
     const { data: session } = useSession();
     const openRef = useRef(null);
     const [files, setFiles] = useState([]);
@@ -46,9 +47,39 @@ export default function CreateProperty() {
         },
     });
 
-    const handleSubmit = (values) => {
-        console.log(values);
-        console.log(files);
+    const handleSubmit = async (values) => {
+        const resp = await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/properties`,
+            {
+                method: "POST",
+                body: JSON.stringify(values),
+            },
+            session
+        );
+
+        const promises = [];
+
+        for (const image of files) {
+            const formData = new FormData();
+            formData.append("image", image)
+
+            promises.push(
+                fetchData(
+                    `${process.env.NEXT_PUBLIC_API_URL}/properties/${resp.data.id}/images`,
+                    {
+                        method: "POST",
+                        body: formData,
+                    },
+                    session,
+                    true
+                )
+            );
+        }
+
+        Promise.all(promises).then((promises) => {
+            close();
+            window.location.reload();
+        });
     };
 
     return (

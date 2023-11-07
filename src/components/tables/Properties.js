@@ -78,7 +78,7 @@ const Property = ({ item }) => {
                 </Table.Td>
             </Table.Tr>
             <Modal opened={opened} onClose={close} title={name} centered>
-                <EditProperty data={item} />
+                <EditProperty data={item} close={close} />
             </Modal>
         </>
     );
@@ -121,7 +121,7 @@ export default function Properties({ data }) {
                 title="Add Property"
                 centered
             >
-                <CreateProperty />
+                <CreateProperty close={close} />
             </Modal>
         </>
     );

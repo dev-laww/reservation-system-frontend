@@ -16,6 +16,7 @@ import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
+import { fetchData } from "@src/lib/utils/http";
 
 const File = ({ name, onClick }) => {
     return (
@@ -39,9 +40,10 @@ const File = ({ name, onClick }) => {
     );
 };
 
-export default function EditProperty({ data }) {
+export default function EditProperty({ data, close }) {
     const { data: session } = useSession();
     const {
+        id,
         name,
         description,
         address,
@@ -50,9 +52,10 @@ export default function EditProperty({ data }) {
         zip,
         type,
         price,
-        images,
     } = data;
+
     const openRef = useRef(null);
+    const [images, setImages] = useState(data.images);
     const [files, setFiles] = useState([]);
     const form = useForm({
         initialValues: {
@@ -67,13 +70,51 @@ export default function EditProperty({ data }) {
         },
     });
 
-    const handleSubmit = (values) => {
-        console.log(values);
-        console.log(files);
+    const handleSubmit = async (values) => {
+        await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/properties/${id}`,
+            {
+                method: "PUT",
+                body: JSON.stringify(values),
+            },
+            session
+        );
+
+        const promises = []
+
+        for (const image of files) {
+            const formData = new FormData();
+            formData.append("image", image)
+
+            promises.push(
+                fetchData(
+                    `${process.env.NEXT_PUBLIC_API_URL}/properties/${id}/images`,
+                    {
+                        method: "POST",
+                        body: formData,
+                    },
+                    session,
+                    true
+                )
+            );
+        }
+
+        Promise.all(promises).then((promises) => {
+            close();
+            window.location.reload();
+        });
     };
 
-    const handleDelete = (id) => {
-        console.log("delete image", id);
+    const handleDelete = async (imgId) => {
+       await fetchData(
+            `${process.env.NEXT_PUBLIC_API_URL}/properties/${id}/images/${imgId}`,
+            {
+                method: "DELETE",
+            },
+            session
+        );
+
+        setImages((prev) => prev.filter((img) => img.id !== imgId));
     };
 
     return (
@@ -218,7 +259,7 @@ export default function EditProperty({ data }) {
                     <Grid.Col>
                         <Text mb="sm">Images</Text>
                         <Flex gap="md" wrap="wrap" align="center">
-                            {images.map((image) => (
+                            {images.map((image) => (  
                                 <Box key={image.id} span={{ sm: 12, md: 6 }}>
                                     <Image
                                         src={image.url}
