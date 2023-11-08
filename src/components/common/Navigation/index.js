@@ -70,7 +70,7 @@ const UserMenu = () => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Label>Settings</Menu.Label>
-                <ProfileCard session={session} />
+                <ProfileCard session={session} closeUserMenu={() => console.log('clicked')}/>
             </Menu.Dropdown>
         </Menu>
     );
