@@ -7,13 +7,16 @@ import {
     Container,
     Title,
     Paper,
+    Text
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { fetchData } from "@src/lib/utils/http";
+import { useRouter } from "next/navigation";
 import classes from "./EditProfile.module.css";
 
 export default function EditProfile({ session }) {
     const { firstName, lastName, phoneNumber } = session.user;
+    const router = useRouter();
     const form = useForm({
         initialValues: {
             firstName: firstName,
@@ -27,6 +30,9 @@ export default function EditProfile({ session }) {
             <Title className={classes.title} ta="center">
                 Edit Profile
             </Title>
+            <Text c="dimmed" fz="sm" ta="center">
+                Changes will apply on next login
+            </Text>
 
             <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
                 <form
@@ -39,7 +45,7 @@ export default function EditProfile({ session }) {
                                     body: JSON.stringify(values),
                                 },
                                 session
-                            );
+                            ).then((res) => router.push("/"));
                         },
                         (validationErrors, _values, _event) =>
                             console.log(validationErrors)
