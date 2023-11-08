@@ -2,7 +2,7 @@
 
 import { ActionIcon, Menu, Indicator } from "@mantine/core";
 import { IconBell } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { fetchData } from "@utils/http";
 import { useEffect, useState } from "react";
 
@@ -18,8 +18,6 @@ export default function Notification() {
             { method: "PUT" },
             session
         );
-
-        console.log(data);
 
         if (data?.status === 200) {
             setNotifications(
@@ -48,6 +46,8 @@ export default function Notification() {
                 session
             );
 
+            if (!data) signOut({ callbackUrl: "/auth" });
+
             setNotifications(data?.data || null);
         };
 
@@ -67,7 +67,15 @@ export default function Notification() {
         >
             <Menu.Target>
                 <ActionIcon size="lg" variant="default">
-                    <Indicator  size={6} color="secondary" disabled={!notifications.some((notification) => !notification.seen)}>
+                    <Indicator
+                        size={6}
+                        color="secondary"
+                        disabled={
+                            !notifications.some(
+                                (notification) => !notification.seen
+                            )
+                        }
+                    >
                         <IconBell stroke={1} />
                     </Indicator>
                 </ActionIcon>
@@ -80,8 +88,12 @@ export default function Notification() {
                             onClick={() => handleRead(notification.id)}
                             disabled={notification.seen}
                         >
-                            <Indicator size={6} color="secondary" disabled={notification.seen}>
-                            {notification.message}
+                            <Indicator
+                                size={6}
+                                color="secondary"
+                                disabled={notification.seen}
+                            >
+                                {notification.message}
                             </Indicator>
                         </Menu.Item>
                     ))
