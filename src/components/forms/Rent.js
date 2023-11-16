@@ -24,7 +24,31 @@ export default function Rent({ data }) {
     min.setMonth(min.getMonth() - 1);
 
     const handleSubmit = async () => {
-        console.log(month);
+        const { start_date, end_date, payment_type, amount } = form.values;
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/properties/${id}/rentals`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    start_date,
+                    end_date,
+                    payment_type,
+                    amount,
+                }),
+            }
+        );
+
+        const data = await response.json();
+        
+        if (data.detail) {
+            alert(data.detail);
+        } else {
+            alert("Successfully rented!");
+            close();
+        }
     };
 
     useEffect(() => {
@@ -34,7 +58,7 @@ export default function Rent({ data }) {
         });
     }, [month]);
 
-    console.log(session)
+    console.log(session);
 
     return (
         <>
