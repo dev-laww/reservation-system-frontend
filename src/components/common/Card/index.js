@@ -13,7 +13,7 @@ import { Carousel } from "@mantine/carousel";
 import { IconStar } from "@tabler/icons-react";
 import classes from "./Card.module.css";
 
-export default function Card({ data }) {
+export default function Card({ data, admin = false }) {
     const { images, name, price, city, description, id } = data;
     const slides = images.map((image) => (
         <Carousel.Slide key={image.id}>
@@ -72,17 +72,17 @@ export default function Card({ data }) {
                     component="a"
                     href={`/properties/${id}`}
                 >
-                    Rent now
+                    {admin ? "View Details" : "Rent Now"}
                 </Button>
             </Group>
         </MantineCard>
     );
 }
 
-export function GridCard({ item }) {
+export function GridCard({ item, admin = false }) {
     return (
         <Grid.Col span={{ sm: 12, md: 6, lg: 4 }}>
-            <Card data={item} />
+            <Card data={item} admin={admin} />
         </Grid.Col>
     );
 }

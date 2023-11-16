@@ -14,7 +14,7 @@ export default async function Home({ searchParams }) {
     );
 
     const items = data.data.map((item) => (
-        <GridCard key={item.id} item={item} />
+        <GridCard key={item.id} item={item} admin={session.user.admin} />
     ));
 
     return (

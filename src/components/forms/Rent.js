@@ -5,8 +5,10 @@ import { Button, Modal, Box, Select, TextInput, Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { MonthPicker } from "@mantine/dates";
+import { useSession } from "next-auth/react";
 
 export default function Rent({ data }) {
+    const { data: session } = useSession();
     const { id, occupied } = data;
     const [month, setMonth] = useState([null, null]);
     const form = useForm({
@@ -32,9 +34,15 @@ export default function Rent({ data }) {
         });
     }, [month]);
 
+    console.log(session)
+
     return (
         <>
-            <Button onClick={open} color="secondary" disabled={occupied}>
+            <Button
+                onClick={open}
+                color="secondary"
+                disabled={occupied || session?.user.admin}
+            >
                 {occupied ? "Not Available" : "Rent"}
             </Button>
             <Modal
@@ -65,7 +73,9 @@ export default function Rent({ data }) {
                     label="Payment Method"
                     placeholder="Pick value"
                     value={form.values.payment_type}
-                    onChange={(value) => form.setFieldValue("payment_type", value)}
+                    onChange={(value) =>
+                        form.setFieldValue("payment_type", value)
+                    }
                     data={[
                         {
                             value: "ewallet",
