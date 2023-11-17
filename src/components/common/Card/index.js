@@ -14,7 +14,7 @@ import { IconStar } from "@tabler/icons-react";
 import classes from "./Card.module.css";
 
 export default function Card({ data, admin = false }) {
-    const { images, name, price, city, description, id } = data;
+    const { images, name, price, city, description, id, ratings } = data;
     const slides = images.map((image) => (
         <Carousel.Slide key={image.id}>
             <Image src={image.url} alt={name} />
@@ -45,7 +45,7 @@ export default function Card({ data, admin = false }) {
                 <Group gap={5}>
                     <IconStar style={{ width: rem(16), height: rem(16) }} />
                     <Text fz="xs" fw={500}>
-                        4.78
+                        {ratings}
                     </Text>
                 </Group>
             </Group>
