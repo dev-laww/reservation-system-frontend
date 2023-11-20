@@ -38,7 +38,8 @@ export default function Rent({ data }) {
                     payment_type,
                     amount,
                 }),
-            }
+            },
+            session
         );
 
         const data = await response.json();
