@@ -6,6 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { MonthPicker } from "@mantine/dates";
 import { useSession } from "next-auth/react";
+import { fetchData } from "@src/lib/utils/http";
 
 export default function Rent({ data }) {
     const { data: session } = useSession();
@@ -25,7 +26,7 @@ export default function Rent({ data }) {
 
     const handleSubmit = async () => {
         const { start_date, end_date, payment_type, amount } = form.values;
-        const response = await fetch(
+        const response = await fetchData(
             `${process.env.NEXT_PUBLIC_API_URL}/properties/${id}/rentals`,
             {
                 method: "POST",
