@@ -44,7 +44,12 @@ export default function Rent({ data }) {
         );
 
         const data = await response.json();
-        
+
+        if (!start_date || !end_date) {
+            alert("Please select a date range");
+            return
+        }
+
         if (data.detail) {
             alert(data.detail);
         } else {
