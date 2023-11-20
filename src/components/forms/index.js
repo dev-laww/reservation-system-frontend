@@ -7,4 +7,4 @@ export { default as NotifyTenant } from "./NotifyTenant";
 export { default as Rent } from "./Rent";
 export { default as EditProfile } from "./EditProfile";
 export { default as CreateProperty } from "./CreateProperty";
-export { default as EditProperty } from "./EditProfile";
+export { default as EditProperty } from "./EditProperty";
