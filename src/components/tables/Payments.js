@@ -39,7 +39,7 @@ const Payment = ({ item }) => {
             session
         );
 
-        router.reload();
+        window.location.reload();
     };
 
     return (
@@ -68,7 +68,7 @@ const Payment = ({ item }) => {
                             : "red"
                     }
                 >
-                    {upperFirst(status)}
+                    {upperFirst(status === "declined" ? "not paid" : status)}
                 </Badge>
             </Table.Td>
             <Table.Td>${amount.toFixed(2)}</Table.Td>
@@ -86,7 +86,6 @@ const Payment = ({ item }) => {
                         variant="subtle"
                         color="red"
                         onClick={() => handleCancelled(id)}
-                        disabled={status !== "pending"}
                     >
                         <IconX
                             style={{ width: rem(16), height: rem(16) }}
@@ -97,7 +96,6 @@ const Payment = ({ item }) => {
                         variant="subtle"
                         color="green"
                         onClick={() => handlePaid(id)}
-                        disabled={status !== "pending"}
                     >
                         <IconCheck
                             style={{ width: rem(16), height: rem(16) }}
