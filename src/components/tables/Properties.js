@@ -18,7 +18,7 @@ import { useSession } from "next-auth/react";
 
 const Property = ({ item }) => {
     const { data: session } = useSession();
-    const { name, price, id } = item;
+    const { name, description, price, id } = item;
     const [opened, { open, close }] = useDisclosure(false);
     const router = useRouter();
     const handleDelete = async (id) => {
@@ -40,7 +40,7 @@ const Property = ({ item }) => {
                     <Text fz="sm">{name}</Text>
                 </Table.Td>
                 <Table.Td>
-                    <Text fz="sm">{name}</Text>
+                    <Text fz="sm">{description}</Text>
                 </Table.Td>
                 <Table.Td>
                     <Text fz="sm">${price.toFixed(2)} / month</Text>
