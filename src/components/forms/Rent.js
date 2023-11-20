@@ -46,7 +46,7 @@ export default function Rent({ data }) {
             session
         );
 
-        const data = await response.json();
+        const data = response;
 
         if (data.detail) {
             alert(data.detail);
