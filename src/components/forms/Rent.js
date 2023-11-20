@@ -14,8 +14,8 @@ export default function Rent({ data }) {
     const [month, setMonth] = useState([null, null]);
     const form = useForm({
         initialValues: {
-            start_date: month[0],
-            end_date: month[1],
+            start_date: month[0] ? month[0].toISOString() : null,
+            end_date: month[1] ? month[1].toISOString() : null,
             payment_type: "",
             amount: 0,
         },
@@ -26,13 +26,16 @@ export default function Rent({ data }) {
 
     const handleSubmit = async () => {
         const { start_date, end_date, payment_type, amount } = form.values;
+
+        if (!start_date || !end_date) {
+            alert("Please select a date range");
+            return
+        }
+
         const response = await fetchData(
             `${process.env.NEXT_PUBLIC_API_URL}/properties/${id}/rentals`,
             {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 body: JSON.stringify({
                     start_date,
                     end_date,
@@ -44,11 +47,6 @@ export default function Rent({ data }) {
         );
 
         const data = await response.json();
-
-        if (!start_date || !end_date) {
-            alert("Please select a date range");
-            return
-        }
 
         if (data.detail) {
             alert(data.detail);
