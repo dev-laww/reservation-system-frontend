@@ -22,7 +22,6 @@ export default function Rent({ data }) {
     });
     const [opened, { open, close }] = useDisclosure(false);
     const min = new Date();
-    min.setMonth(min.getMonth() - 1);
 
     const handleSubmit = async () => {
         const { start_date, end_date, payment_type, amount } = form.values;
