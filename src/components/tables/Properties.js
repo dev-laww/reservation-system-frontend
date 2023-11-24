@@ -43,7 +43,7 @@ const Property = ({ item }) => {
                     <Text fz="sm">{description}</Text>
                 </Table.Td>
                 <Table.Td>
-                    <Text fz="sm">${price.toFixed(2)} / month</Text>
+                    <Text fz="sm">₱{price.toFixed(2)} / month</Text>
                 </Table.Td>
                 <Table.Td>
                     <Group gap={0} justify="flex-end">
