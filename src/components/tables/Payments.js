@@ -71,7 +71,7 @@ const Payment = ({ item }) => {
                     {upperFirst(status === "declined" ? "not paid" : status)}
                 </Badge>
             </Table.Td>
-            <Table.Td>${amount.toFixed(2)}</Table.Td>
+            <Table.Td>₱{amount.toFixed(2)}</Table.Td>
             <Table.Td>
                 <Text fz="sm" fw={500}>
                     {rental.property.name}
